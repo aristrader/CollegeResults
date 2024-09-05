@@ -12,18 +12,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@JsonPropertyOrder({ "metaData", "data", "errors" })
+@JsonPropertyOrder({"metaData", "data", "errors"})
 @JsonInclude(Include.NON_NULL)
 @Getter
 @Setter
-public class RestResponse
-{
+public class RestResponse {
+
   private RestMetaDataTo metaData;
   private Object data;
   private List<RestError> errors;
 
-  public static RestResponse successResponse(Object data)
-  {
+  public static RestResponse successResponse(Object data) {
     RestResponse r = new RestResponse();
     r.setData(data);
     return r;
@@ -41,22 +40,22 @@ public class RestResponse
   @AllArgsConstructor
   @Builder
   @JsonInclude(Include.NON_NULL)
-  @JsonPropertyOrder({ "value", "metaInfo" })
-  public static class RestMetaDataTo
-  {
+  @JsonPropertyOrder({"value", "metaInfo"})
+  public static class RestMetaDataTo {
+
     private Map<String, Object> value;
     private String metaInfo;
   }
 
-  @JsonPropertyOrder({ "code", "title", "detail" })
+  @JsonPropertyOrder({"code", "title", "detail"})
   @JsonInclude(JsonInclude.Include.NON_NULL)
   @Getter
   @Setter
   @NoArgsConstructor
   @AllArgsConstructor
   @ToString
-  public static class RestError
-  {
+  public static class RestError {
+
     private int code;
     private String title;
     private String detail;

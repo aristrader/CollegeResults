@@ -1,5 +1,6 @@
 package org.collegeWorks.collegeresults.jpa.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.collegeWorks.collegeresults.jpa.entity.CollegeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,15 @@ public interface CollegeRepository extends JpaRepository<CollegeEntity, Integer>
    * @return an Optional containing the CollegeEntity if found, or empty if not
    */
   Optional<CollegeEntity> findByCollegeNameAndAddress(String collegeName, String address);
+
+  /**
+   * Retrieves a list of colleges where the College_Name contains the specified keyword, ignoring case.
+   *
+   * This method performs a case-insensitive search for colleges whose names
+   * include the supplied substring.
+   *
+   * @param keyword the substring to search for within the college names
+   * @return a list of CollegeEntity objects where the College_Name contains the keyword, ignoring case
+   */
+  List<CollegeEntity> findByCollegeNameContainingIgnoreCase(String keyword);
 }

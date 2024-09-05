@@ -1,6 +1,7 @@
 package org.collegeWorks.collegeresults.controllers;
 
 import jakarta.validation.Valid;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstants;
 import org.collegeWorks.collegeresults.exception.ServiceException;
@@ -25,7 +26,6 @@ public class CollegesController {
   @Autowired
   CollegeService collegeService;
 
-  // TODO : Have a standard response structure like RestResponse class or something
   @PostMapping(PathConstants.ADD)
   public ResponseEntity<RestResponse> insertColleges(
       @Valid @RequestBody CollegeRequest collegeRequest)
@@ -37,9 +37,9 @@ public class CollegesController {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @GetMapping()
+  @GetMapping(PathConstants.GET)
   public ResponseEntity<RestResponse> getCollegeWithNameAndAddress(
-      @RequestParam("name") String name, @RequestParam("address") String address)
+      @NonNull @RequestParam("name") String name, @NonNull @RequestParam("address") String address)
       throws ServiceException {
     log.info(
         "[CollegesController] Received the request for finding college with name {} and address {}",
@@ -49,11 +49,22 @@ public class CollegesController {
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  // Update already existing college details like director, etc.
+  @GetMapping(PathConstants.GET_ALL)
+  public ResponseEntity<RestResponse> getCollegesWithName(
+      @NonNull @RequestParam("name") String name)
+      throws ServiceException {
+    log.info(
+        "[CollegesController] Received the request for finding colleges with name {}",
+        name);
+    RestResponse response = RestResponse.successResponse(
+        collegeService.getCollegesWithName(name));
+    return ResponseEntity.status(HttpStatus.OK).body(response);
+  }
 
-  // Get list of all colleges with name that contains the specific word
-  // Simply return the list
+  // TODO:
+  // Update already existing college details like director, etc. But no update to college name and address.
+  // Question while looking at the above case -> Can we just have the college name as unique??
 
-  // Get list of colleges with the exact name
-  // Simply return the list
+  // Update the college name or address (very rare scenario). When thinking front end we can have a otp flow for this case.
+  // Very major changes.
 }
