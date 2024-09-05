@@ -1,0 +1,14 @@
+Primary
+
+Create indexes
+
+
+Secondary
+
+1. Saving the project
+Upload this project to github
+Keep the visibility to private
+
+2. Saving the data
+Have the database in some cloud application probably we can use aiven.io
+
