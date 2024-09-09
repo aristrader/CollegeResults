@@ -1,0 +1,6 @@
+What all test cases to cover in later scenarios ->
+
+1. All constraint validations are working
+2. All mandatory fields are sent
+3. Insertions are working
+4. When data is not found, things are appropriately handled.

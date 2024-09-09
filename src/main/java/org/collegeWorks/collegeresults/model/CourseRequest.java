@@ -1,17 +1,18 @@
 package org.collegeWorks.collegeresults.model;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CollegeRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CourseRequest {
   @NotNull
   private String name;
-  private String director;
-  private String email;
-  private String website;
   @NotNull
-  private String address;
+  private int length;
 }

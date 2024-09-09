@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping(PathConstants.COLLEGES_PATH)
-public class CollegesController {
+public class CollegeController {
 
   @Autowired
   CollegeService collegeService;
@@ -30,8 +30,8 @@ public class CollegesController {
   public ResponseEntity<RestResponse> insertColleges(
       @Valid @RequestBody CollegeRequest collegeRequest)
       throws ServiceException {
-    log.info("[CollegesController] Received request to insert college {}", collegeRequest);
-    int collegeIdCreated = collegeService.saveCollege(collegeRequest);
+    log.info("[CollegeController] Received request to insert college {}", collegeRequest);
+    int collegeIdCreated = collegeService.insertCollege(collegeRequest);
     RestResponse response = RestResponse.successResponse(
         String.format("The college has been successfully inserted with id : %d", collegeIdCreated));
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -42,7 +42,7 @@ public class CollegesController {
       @NonNull @RequestParam("name") String name, @NonNull @RequestParam("address") String address)
       throws ServiceException {
     log.info(
-        "[CollegesController] Received the request for finding college with name {} and address {}",
+        "[CollegeController] Received the request for finding college with name {} and address {}",
         name, address);
     RestResponse response = RestResponse.successResponse(
         collegeService.getCollegeWithNameAndAddress(name, address));
@@ -54,10 +54,10 @@ public class CollegesController {
       @NonNull @RequestParam("name") String name)
       throws ServiceException {
     log.info(
-        "[CollegesController] Received the request for finding colleges with name {}",
+        "[CollegeController] Received the request for finding colleges with name {}",
         name);
     RestResponse response = RestResponse.successResponse(
-        collegeService.getCollegesWithName(name));
+        collegeService.getCollegesContainingName(name));
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 

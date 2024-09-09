@@ -1,0 +1,6 @@
+TODO:
+Add the constraints that when adding a student only when the college and course pair exists in the college-course id table
+only then allow for the student to be inserted.
+
+TODO:
+Get list of all courses offered by a college and the number of semesters in them as a list.

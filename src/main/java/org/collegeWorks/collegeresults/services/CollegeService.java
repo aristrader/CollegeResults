@@ -17,24 +17,24 @@ public class CollegeService {
   @Autowired
   CollegeRepository collegeRepository;
 
-  public int saveCollege(CollegeRequest collegeRequest) throws ServiceException {
+  public int insertCollege(CollegeRequest collegeRequest) throws ServiceException {
     try {
       CollegeEntity collegeEntity = getCollegeEntityFromCollegeRequest(collegeRequest);
       return collegeRepository.save(collegeEntity).getId();
     } catch (DataIntegrityViolationException ex) {
-      log.error("[CollegeService] Data integrity violation occured : {}", ex.getMessage(), ex);
+      log.error("[CollegeService] Data integrity violation occurred : {}", ex.getMessage(), ex);
       throw new ServiceException(ex.getMessage());
     }
   }
 
   public CollegeEntity getCollegeWithNameAndAddress(String name, String address)
       throws ServiceException {
-    return collegeRepository.findByCollegeNameAndAddress(name, address)
+    return collegeRepository.findByNameAndAddress(name, address)
         .orElseThrow(() -> new ServiceException("No such college is present in the DB."));
   }
 
-  public List<CollegeEntity> getCollegesWithName(String name) throws ServiceException {
-    List<CollegeEntity> colleges = collegeRepository.findByCollegeNameContainingIgnoreCase(name);
+  public List<CollegeEntity> getCollegesContainingName(String name) throws ServiceException {
+    List<CollegeEntity> colleges = collegeRepository.findByNameContainingIgnoreCase(name);
     if (colleges.isEmpty()) {
       throw new ServiceException("No college found containing the name: " + name);
     }
@@ -43,7 +43,7 @@ public class CollegeService {
 
   private CollegeEntity getCollegeEntityFromCollegeRequest(CollegeRequest collegeRequest) {
     CollegeEntity collegeEntity = new CollegeEntity();
-    collegeEntity.setCollegeName(collegeRequest.getCollegeName());
+    collegeEntity.setName(collegeRequest.getName());
     collegeEntity.setDirector(collegeRequest.getDirector());
     collegeEntity.setEmail(collegeRequest.getEmail());
     collegeEntity.setWebsite(collegeRequest.getWebsite());

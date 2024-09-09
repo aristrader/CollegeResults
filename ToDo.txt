@@ -9,3 +9,7 @@ Secondary
 Have the database in some cloud application probably we can use aiven.io, also have a database backup
 
 2. better exception raising and handling
+
+3. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
+
+4. Set the varchar 100 limitations on the entities as well. and other constraints
