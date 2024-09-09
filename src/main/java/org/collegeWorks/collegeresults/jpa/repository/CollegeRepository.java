@@ -14,7 +14,7 @@ public interface CollegeRepository extends JpaRepository<CollegeEntity, Integer>
    * @param address the address of the college
    * @return an Optional containing the CollegeEntity if found, or empty if not
    */
-  Optional<CollegeEntity> findByCollegeNameAndAddress(String collegeName, String address);
+  Optional<CollegeEntity> findByNameAndAddress(String collegeName, String address);
 
   /**
    * Retrieves a list of colleges where the College_Name contains the specified keyword, ignoring case.
@@ -25,5 +25,5 @@ public interface CollegeRepository extends JpaRepository<CollegeEntity, Integer>
    * @param keyword the substring to search for within the college names
    * @return a list of CollegeEntity objects where the College_Name contains the keyword, ignoring case
    */
-  List<CollegeEntity> findByCollegeNameContainingIgnoreCase(String keyword);
+  List<CollegeEntity> findByNameContainingIgnoreCase(String keyword);
 }

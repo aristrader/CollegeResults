@@ -7,36 +7,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "college")
+@Entity(name = "course")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "college", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"college_came", "address"})
+@Table(name = "course", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"course_name", "course_length"})
 })
-public class CollegeEntity {
+public class CourseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  @Column(name = "college_name", nullable = false)
+  @NotNull
+  @Column(name = "course_name", nullable = false)
   private String name;
 
-  @Column(name = "director")
-  private String director;
-
-  @Column(name = "email")
-  private String email;
-
-  @Column(name = "website")
-  private String website;
-
-  @Column(name = "address", nullable = false)
-  private String address;
+  @NotNull
+  @Column(name = "course_length", nullable = false)
+  private int length;
 }
