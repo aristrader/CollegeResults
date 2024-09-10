@@ -13,3 +13,7 @@ Have the database in some cloud application probably we can use aiven.io, also h
 3. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
 
 4. Set the varchar 100 limitations on the entities as well. and other constraints
+
+5. can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
+
+6. Some script or something to make sure all the entries that we have made are correct in the db when inserting the students and when inserting the marks.

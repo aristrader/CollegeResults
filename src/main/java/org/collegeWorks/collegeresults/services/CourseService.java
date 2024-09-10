@@ -35,8 +35,7 @@ public class CourseService {
     return courses;
   }
 
-  public CourseEntity getCourseWithNameAndLength(String name, int length)
-      throws ServiceException {
+  public CourseEntity getCourseWithNameAndLength(String name, int length) throws ServiceException {
     return courseRepository.findByNameAndLength(name, length)
         .orElseThrow(() -> new ServiceException("No such course is present in the DB."));
   }

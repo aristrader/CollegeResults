@@ -4,3 +4,4 @@ What all test cases to cover in later scenarios ->
 2. All mandatory fields are sent
 3. Insertions are working
 4. When data is not found, things are appropriately handled.
+5. Test that delimeter we have added in the sql script if is working properly or not, when filling the enrollment table.
