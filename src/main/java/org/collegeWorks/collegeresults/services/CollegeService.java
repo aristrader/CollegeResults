@@ -24,6 +24,8 @@ public class CollegeService {
     } catch (DataIntegrityViolationException ex) {
       log.error("[CollegeService] Data integrity violation occurred : {}", ex.getMessage(), ex);
       throw new ServiceException(ex.getMessage());
+    } catch (Exception ex) {
+      throw new ServiceException("Failed to insert student: " + ex.getMessage());
     }
   }
 

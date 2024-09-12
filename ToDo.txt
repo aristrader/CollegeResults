@@ -1,7 +1,7 @@
 Primary
 
-Create indexes
-
+1. Create indexes
+2. Create DTO's for all.
 
 Secondary
 
@@ -13,3 +13,25 @@ Have the database in some cloud application probably we can use aiven.io, also h
 3. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
 
 4. Set the varchar 100 limitations on the entities as well. and other constraints
+
+5. can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
+
+6. Some script or something to make sure all the entries that we have made are correct in the db when inserting the students and when inserting the marks.
+
+7. for now student table is directly related to the course, college id and sem id table.
+Later we can have the enforcement that the student can only be enrolled in the college if the college offers that course and that course has those sem id related to them.
+
+8. create automated test cases
+
+9. bidirectional mapping to fetch all students related to a college course sem subject enrollement, maybe this cannot be done directly in terms of the
+bidirectional mapping cause one student will be enrolled in many subjects. let's have a look at this later.
+
+10. Add better logging. Also for logging if data dog or something is available to trace each call.
+
+11. Read more on the database code writing , for example these parts -> @JoinColumn(name = "college_id", nullable = false, insertable = false, updatable = false)
+
+12. Read more on good practices while writing applications codes, for example the use of DTO's
+
+
+After all this is complete higher versions ->
+search for open source options like moodle, understand them, look at if you can offer these via them to get each college there own system to work on.

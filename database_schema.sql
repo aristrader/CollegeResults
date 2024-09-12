@@ -9,7 +9,7 @@ use college_results_db;
 -- College table - CollegeName and address column together are unique to allow same college name together twice
 -- Address cannot be empty
 CREATE TABLE college (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    college_id INT AUTO_INCREMENT PRIMARY KEY,
     college_name VARCHAR(100) NOT NULL,
     director VARCHAR(100),
     email VARCHAR(100),
@@ -20,7 +20,7 @@ CREATE TABLE college (
 
 -- Courses table - 1 course like bcom can be offered in 2 systems like -> 6 sems or 3 years.
 CREATE TABLE course (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(100) NOT NULL,
     course_length INT NOT NULL,
     UNIQUE (course_name, course_length)
@@ -28,36 +28,36 @@ CREATE TABLE course (
 
 -- Semester table -- holds the possible semester values.
 CREATE TABLE semester (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    sem_id INT AUTO_INCREMENT PRIMARY KEY,
     sem_no INT NOT NULL UNIQUE  -- Ensure Sem_No is unique across all semesters
 );
 
 -- This table manages the relationship between colleges and the courses they offer.
 -- It ensures that each college can offer multiple courses, but a specific course can only be associated with a college once.
 CREATE TABLE college_course (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    college_course_id INT AUTO_INCREMENT PRIMARY KEY,
     college_id INT NOT NULL,
     course_id INT NOT NULL,
     UNIQUE (college_id, course_id),
-    FOREIGN KEY (college_id) REFERENCES college(id),
-    FOREIGN KEY (course_id) REFERENCES course(id)
+    FOREIGN KEY (college_id) REFERENCES college(college_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
 -- Table to manage the many-to-many relationship between courses and semesters.
 -- Ensures that each course is associated with specific semesters.
 CREATE TABLE course_sem (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    course_sem_id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT NOT NULL,
     sem_id INT NOT NULL,
     UNIQUE (course_id, sem_id),
-    FOREIGN KEY (course_id) REFERENCES course(id),
-    FOREIGN KEY (sem_id) REFERENCES semester(id)
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (sem_id) REFERENCES semester(sem_id)
 );
 
 -- Table to store student details, including personal information, college affiliation, and course enrollment.
 -- Unique constraints ensure each student's Roll_No and Enrollment_No are unique within their respective college.
 CREATE TABLE student (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
     student_name VARCHAR(100) NOT NULL,
     father_name VARCHAR(100) NOT NULL,
     mother_name VARCHAR(100) NOT NULL,
@@ -69,56 +69,56 @@ CREATE TABLE student (
     photo VARCHAR(255),
     UNIQUE (college_id, roll_no),
     UNIQUE (college_id, enrollment_no),
-    FOREIGN KEY (college_id) REFERENCES college(id),
-    FOREIGN KEY (course_id) REFERENCES course(id),
-    FOREIGN KEY (sem_id) REFERENCES semester(id)
+    FOREIGN KEY (college_id) REFERENCES college(college_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (sem_id) REFERENCES semester(sem_id)
 );
 
 -- Table to store information about different types of subjects offered within courses.
 -- The 'Type' column specifies the category of the subject, including Foundation, Major, Minor, etc.
 -- Types: Foundation_Course, Major_1, Major_2, Minor, Open, VOC (Vocational), Internship/Project
-CREATE TABLE subjects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE subject (
+    subject_id INT AUTO_INCREMENT PRIMARY KEY,
     Type ENUM('Foundation_Course', 'Major_1', 'Major_2', 'Minor', 'Open', 'VOC', 'Internship/Project') NOT NULL
 );
 
 -- Table: Optionals
 -- Purpose: Stores information about various optional subjects or topics available for courses.
 -- Optionals_Name: Name of the optional subject or topic. Ex- maths, phy, etc
-CREATE TABLE optionals (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE optional (
+    optional_id INT AUTO_INCREMENT PRIMARY KEY,
     optionals_name VARCHAR(100) NOT NULL,
     has_practical BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- Table to manage different options or specializations available for each subject.
--- Each subject can have multiple options, and each option is uniquely identified per subject.
-CREATE TABLE subject_options (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+-- Table to manage different optional or specializations available for each subject.
+-- Each subject can have multiple optional, and each optional is uniquely identified per subject.
+CREATE TABLE subject_optional (
+    subject_optional_id INT AUTO_INCREMENT PRIMARY KEY,
     subject_id INT NOT NULL,
-    option_id INT NOT NULL,
-    UNIQUE (subject_id, option_id),
-    FOREIGN KEY (subject_id) REFERENCES subjects(id),
-    FOREIGN KEY (option_id) REFERENCES optionals(id)
+    optional_id INT NOT NULL,
+    UNIQUE (subject_id, optional_id),
+    FOREIGN KEY (subject_id) REFERENCES subject(subject_id),
+    FOREIGN KEY (optional_id) REFERENCES optional(optional_id)
 );
 
 -- Table: College_Offers_Subject
--- Purpose: Maps the relationship between colleges, courses, semesters, and subject options. 
+-- Purpose: Maps the relationship between colleges, courses, semesters, and subject optional.
 -- It tracks the maximum credits that can be obtained for subjects and practicals within each combination.
 -- Unique constraint ensures no duplicate entries for the same combination of College, Course, Semester, and Subject Option.
 CREATE TABLE college_offers_subject (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    college_offers_subject_id INT AUTO_INCREMENT PRIMARY KEY,
     college_id INT NOT NULL,
     course_id INT NOT NULL,
     sem_id INT NOT NULL,
-    subject_option_id INT NOT NULL,
+    subject_optional_id INT NOT NULL,
     max_credits_subject INT NOT NULL,
     max_credits_practical INT,
-    UNIQUE (college_id, course_id, sem_id, subject_option_id),
-    FOREIGN KEY (college_id) REFERENCES college(id),
-    FOREIGN KEY (course_id) REFERENCES course(id),
-    FOREIGN KEY (sem_id) REFERENCES semester(id),
-    FOREIGN KEY (subject_option_id) REFERENCES subject_options(id)
+    UNIQUE (college_id, course_id, sem_id, subject_optional_id),
+    FOREIGN KEY (college_id) REFERENCES college(college_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
+    FOREIGN KEY (sem_id) REFERENCES semester(sem_id),
+    FOREIGN KEY (subject_optional_id) REFERENCES subject_optional(subject_optional_id)
 );
 
 -- Enrollment Table
@@ -126,11 +126,11 @@ CREATE TABLE college_offers_subject (
 -- Each entry associates a student with a specific subject offered by the college.
 -- This table helps in managing and tracking student enrollments within different courses and subjects.
 CREATE TABLE enrollment (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    enrollment_id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,
     college_offers_subject_id INT NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES student(id),
-    FOREIGN KEY (college_offers_subject_id) REFERENCES college_offers_subject(id)
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (college_offers_subject_id) REFERENCES college_offers_subject(college_offers_subject_id)
 );
 
 -- Table to store marks obtained by students in their enrolled subjects.
@@ -146,7 +146,7 @@ CREATE TABLE marks (
     main_marks INT NOT NULL,
     cce_marks INT NOT NULL,
     practical_marks INT,
-    FOREIGN KEY (enrollment_id) REFERENCES enrollment(id)
+    FOREIGN KEY (enrollment_id) REFERENCES enrollment(enrollment_id)
 );
 
 -- Trigger: trg_before_enrollment_insert

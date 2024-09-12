@@ -13,25 +13,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "course")
+@Entity(name = "semester")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "course", uniqueConstraints = {
+@Table(name = "semester", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"course_name", "course_length"})})
-public class CourseEntity {
+public class SemesterEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "course_id")
+  @Column(name = "sem_id")
   private int id;
 
   @NotNull
-  @Column(name = "course_name", nullable = false)
-  private String name;
-
-  @NotNull
-  @Column(name = "course_length", nullable = false)
-  private int length;
+  @Column(name = "sem_no", nullable = false, unique = true)
+  private int number;
 }

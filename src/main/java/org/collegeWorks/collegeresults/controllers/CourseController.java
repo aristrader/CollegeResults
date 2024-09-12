@@ -40,8 +40,7 @@ public class CourseController {
 
   @GetMapping(PathConstants.GET_ALL)
   public ResponseEntity<RestResponse> getAllCoursesWithName(
-      @NonNull @RequestParam("name") String name)
-      throws ServiceException {
+      @NonNull @RequestParam("name") String name) throws ServiceException {
     log.info("[CourseController] Received request to get all courses with name similar to : {}",
         name);
     List<CourseEntity> courseEntities = courseService.getAllCoursesContainingName(name);
@@ -51,8 +50,9 @@ public class CourseController {
 
   @GetMapping(PathConstants.GET)
   ResponseEntity<RestResponse> getCourseByNameAndLength(@NonNull @RequestParam("name") String name,
-      @NonNull @RequestParam("lenght") int length) throws ServiceException {
-    log.info("[CourseController] Received request to get the course with name : {} and length : {}", name, length);
+      @NonNull @RequestParam("length") int length) throws ServiceException {
+    log.info("[CourseController] Received request to get the course with name : {} and length : {}",
+        name, length);
     CourseEntity courseEntity = courseService.getCourseWithNameAndLength(name, length);
     RestResponse response = RestResponse.successResponse(courseEntity);
     return ResponseEntity.status(HttpStatus.OK).body(response);
