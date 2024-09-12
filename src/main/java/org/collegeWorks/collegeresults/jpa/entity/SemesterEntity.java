@@ -24,6 +24,7 @@ public class SemesterEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "sem_id")
   private int id;
 
   @NotNull

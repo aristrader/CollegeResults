@@ -19,11 +19,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "course", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"course_name", "course_length"})
-})
+    @UniqueConstraint(columnNames = {"course_name", "course_length"})})
 public class CourseEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "course_id")
   private int id;
 
   @NotNull

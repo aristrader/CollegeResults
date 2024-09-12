@@ -5,3 +5,14 @@ What all test cases to cover in later scenarios ->
 3. Insertions are working
 4. When data is not found, things are appropriately handled.
 5. Test that delimeter we have added in the sql script if is working properly or not, when filling the enrollment table.
+6. Make sure you cannot delete a college when students related to it are still present.
+
+7. Test these cases for the student table later ->
+in the insert all suppose students were getting inserted, and something went wrong due to which
+the operation had to be stopped or the application was stopped or say the db went down.
+Suppose we were inserting 10 students and till then 5 were ready to be inserted or they were inserted.
+What will happen will the 5 entries remain or will they be rolled back.
+Also suppose while inserting 100 students there were 5 students entries that already existed in the db,
+what will happen in that case will the 95 students be inserted or a error will thrown for all?
+
+8.
