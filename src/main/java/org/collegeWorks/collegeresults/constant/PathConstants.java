@@ -8,11 +8,13 @@ public class PathConstants {
   public static final String SEMESTERS = "/semesters";
   public static final String STUDENTS = "/students";
   public static final String OPTIONALS = "/optionals";
+  public static final String SUBJECTS = "/subjects";
   public static final String COLLEGES_PATH = V1 + COLLEGES;
   public static final String COURSES_PATH = V1 + COURSES;
   public static final String SEMESTERS_PATH = V1 + SEMESTERS;
   public static final String STUDENTS_PATH = V1 + STUDENTS;
   public static final String OPTIONALS_PATH = V1 + OPTIONALS;
+  public static final String SUBJECTS_PATH = V1 + SUBJECTS;
   public static final String ADD = "/add";
   public static final String ADD_LIST = "/addList";
   public static final String GET = "/get";

@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-09-12T20:44:43.490Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.8 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="AdYYKnYJDJ4Rt_uaqLrq" version="24.4.8" type="device">
+<mxfile host="Electron" modified="2024-09-13T19:10:44.832Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.8 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="DPYZfiSzZph5pOp2pml0" version="24.4.8" type="device">
   <diagram name="Page-1" id="M_99M76Bb-sfVBKUElkA">
-    <mxGraphModel dx="3565" dy="2564" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3724" dy="2681" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -455,12 +455,12 @@
         <mxCell id="nR_n8vbuQzYUGNSVom8k-210" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" parent="nR_n8vbuQzYUGNSVom8k-206" vertex="1">
           <mxGeometry y="70" width="300" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="nR_n8vbuQzYUGNSVom8k-211" value="Type" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" parent="nR_n8vbuQzYUGNSVom8k-210" vertex="1">
+        <mxCell id="nR_n8vbuQzYUGNSVom8k-211" value="String" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" parent="nR_n8vbuQzYUGNSVom8k-210" vertex="1">
           <mxGeometry width="150" height="40" as="geometry">
             <mxRectangle width="150" height="40" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="nR_n8vbuQzYUGNSVom8k-212" value="ENUM (Found, major1, major2, etc)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" parent="nR_n8vbuQzYUGNSVom8k-210" vertex="1">
+        <mxCell id="nR_n8vbuQzYUGNSVom8k-212" value="VARCHAR(50)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" parent="nR_n8vbuQzYUGNSVom8k-210" vertex="1">
           <mxGeometry x="150" width="150" height="40" as="geometry">
             <mxRectangle width="150" height="40" as="alternateBounds" />
           </mxGeometry>
@@ -799,7 +799,7 @@
         <mxCell id="nR_n8vbuQzYUGNSVom8k-309" value="Current ENUMS -&amp;gt; Foundation_Course, Mojor_1, Major_2, Minor, Open, VOC, Internship/Project" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=15;" parent="1" vertex="1">
           <mxGeometry x="-610" y="1090" width="670" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="1Af-DZQ1wBr7apXG_pFq-1" value="UNIQUE COMBO KEY OF NAME AND HASPRACTICAL" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="1Af-DZQ1wBr7apXG_pFq-1" value="UNIQUE COMBO KEY OF NAME AND HASPRACTICAL" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=15;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="245" y="1060" width="400" height="30" as="geometry" />
         </mxCell>
       </root>

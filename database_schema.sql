@@ -79,7 +79,7 @@ CREATE TABLE student (
 -- Types: Foundation_Course, Major_1, Major_2, Minor, Open, VOC (Vocational), Internship/Project
 CREATE TABLE subject (
     subject_id INT AUTO_INCREMENT PRIMARY KEY,
-    Type ENUM('Foundation_Course', 'Major_1', 'Major_2', 'Minor', 'Open', 'VOC', 'Internship/Project') NOT NULL
+    type VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Table: Optionals
