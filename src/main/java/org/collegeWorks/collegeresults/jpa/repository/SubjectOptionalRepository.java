@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.collegeWorks.collegeresults.jpa.entity.SubjectOptionalEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface SubjectOptionalRepository extends JpaRepository<SubjectOptionalEntity, Integer> {
 
@@ -13,5 +15,10 @@ public interface SubjectOptionalRepository extends JpaRepository<SubjectOptional
 
   Optional<SubjectOptionalEntity> findBySubjectIdAndOptionalId(Integer subjectId,
       Integer optionalId);
+
+  @Query("SELECT o.hasPractical FROM SubjectOptionalEntity s " +
+      "JOIN OptionalEntity o ON s.optionalId = o.id " +
+      "WHERE s.id = :subjectOptionalId")
+  Optional<Boolean> findHasPracticalBySubjectOptionalId(@Param("subjectOptionalId") Integer subjectOptionalId);
 }
 

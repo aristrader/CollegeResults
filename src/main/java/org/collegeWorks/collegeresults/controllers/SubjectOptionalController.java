@@ -5,7 +5,6 @@ import static org.collegeWorks.collegeresults.constant.PathConstants.SUBJECT_OPT
 
 import jakarta.validation.Valid;
 import java.util.List;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstants;
 import org.collegeWorks.collegeresults.dto.SubjectOptionalDTO;
@@ -42,8 +41,8 @@ public class SubjectOptionalController {
 
   @GetMapping(PathConstants.GET)
   public ResponseEntity<SubjectOptionalDTO> getSubjectOptional(
-      @RequestParam("subjectId") int subjectId,
-      @RequestParam("optionalId") int optionalId) throws ServiceException {
+      @RequestParam("subjectId") int subjectId, @RequestParam("optionalId") int optionalId)
+      throws ServiceException {
     log.info(
         "[SubjectOptionalController] Received request to get subject id : {} and optional id : {}",
         subjectId, optionalId);

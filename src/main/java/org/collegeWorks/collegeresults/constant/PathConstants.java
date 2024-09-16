@@ -10,6 +10,8 @@ public class PathConstants {
   public static final String OPTIONALS = "/optionals";
   public static final String SUBJECTS = "/subjects";
   public static final String SUBJECT_OPTIONAL = "/subjectOptional";
+  public static final String COLLEGE_OFFERS_SUBJECT = "/collegeOffersSubjectOptional";
+  public static final String CREDITS = "/credits";
   public static final String COLLEGES_PATH = V1 + COLLEGES;
   public static final String COURSES_PATH = V1 + COURSES;
   public static final String SEMESTERS_PATH = V1 + SEMESTERS;
@@ -19,6 +21,7 @@ public class PathConstants {
   public static final String SUBJECT_OPTIONAL_PATH = V1 + SUBJECT_OPTIONAL;
   public static final String SUBJECT_OPTIONAL_GET_BY_SUBJECT_ID = "/subject/{subjectId}";
   public static final String SUBJECT_OPTIONAL_GET_BY_OPTIONAL_ID = "/optional/{optionalId}";
+  public static final String COLLEGE_OFFERS_SUBJECT_PATH = V1 + COLLEGE_OFFERS_SUBJECT;
   public static final String ADD = "/add";
   public static final String ADD_LIST = "/addList";
   public static final String GET = "/get";
