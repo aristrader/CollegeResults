@@ -30,7 +30,18 @@ bidirectional mapping cause one student will be enrolled in many subjects. let's
 
 11. Read more on the database code writing , for example these parts -> @JoinColumn(name = "college_id", nullable = false, insertable = false, updatable = false)
 
-12. Read more on good practices while writing applications codes, for example the use of DTO's
+12. Read more on good practices while writing applications codes, for example the use of DTO's.
+
+13. Think of changing the subject table to hold subjects in varchar instead of enum or maybe the options to also have enum instead of the string to
+restrict the subjects that can be created. Or maybe the subjects thing doesn't even need a table and go into just simple validations through a list.
+
+14. Think of all possible test cases and write a test for each kind of test case. Maybe we can use some unit testing here.
+
+15. Create the scripts to get the data from dummy excels.
+
+16. Create scripts to match the data with the dummy excels that we have. To do cross verification of proper working of the code.
+
+17. Proper error codes and error responses to know what went wrong in the code flow.
 
 
 After all this is complete higher versions ->

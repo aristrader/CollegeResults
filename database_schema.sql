@@ -79,16 +79,18 @@ CREATE TABLE student (
 -- Types: Foundation_Course, Major_1, Major_2, Minor, Open, VOC (Vocational), Internship/Project
 CREATE TABLE subject (
     subject_id INT AUTO_INCREMENT PRIMARY KEY,
-    Type ENUM('Foundation_Course', 'Major_1', 'Major_2', 'Minor', 'Open', 'VOC', 'Internship/Project') NOT NULL
+    type VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Table: Optionals
 -- Purpose: Stores information about various optional subjects or topics available for courses.
 -- Optionals_Name: Name of the optional subject or topic. Ex- maths, phy, etc
+-- unique combined key is required so that i can have max 2 entries of each subject, for example - physics with and without practical
 CREATE TABLE optional (
     optional_id INT AUTO_INCREMENT PRIMARY KEY,
     optionals_name VARCHAR(100) NOT NULL,
     has_practical BOOLEAN NOT NULL DEFAULT FALSE
+    UNIQUE (optionals_name, has_practical)
 );
 
 -- Table to manage different optional or specializations available for each subject.

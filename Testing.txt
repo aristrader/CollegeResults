@@ -15,4 +15,5 @@ What will happen will the 5 entries remain or will they be rolled back.
 Also suppose while inserting 100 students there were 5 students entries that already existed in the db,
 what will happen in that case will the 95 students be inserted or a error will thrown for all?
 
-8.
+8. test cases, what will happen if you send unnecessary extra fields.
+9. test cases, what will happen if some values are sent as null, is it okay to have them as null or not.
