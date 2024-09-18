@@ -1,0 +1,7 @@
+1. have it in the app somewhere so that we can save the details of what all subjects the marks list has been received
+
+2. create proper indexes
+NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
+       ********Add indexes on foreign key columns if not already automatically indexed **********
+
+3. The issue of adding a class representative in the DB think of a solution for the same.
