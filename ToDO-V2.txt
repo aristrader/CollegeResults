@@ -5,3 +5,9 @@ NOTE : Ensure that all foreign key constraints are properly indexed to optimize 
        ********Add indexes on foreign key columns if not already automatically indexed **********
 
 3. The issue of adding a class representative in the DB think of a solution for the same.
+
+4. Add the bidirectional mappings in the entity classes.
+
+5. in the enrollement and marks table, have the columns added later for the created time and updated time.
+
+6. validation for emails and phone numbers etc in the request and proper error handling and response display for all

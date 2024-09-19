@@ -21,7 +21,7 @@ CREATE TABLE teacher (
     teacher_name VARCHAR(100) NOT NULL,
     experience INT,
     email VARCHAR(100) UNIQUE,
-    ph_no INT UNIQUE,
+    phone_number VARCHAR(10) UNIQUE,
     specialization VARCHAR(100),
     photo VARCHAR(255),
     FOREIGN KEY (college_id) REFERENCES college(college_id)
