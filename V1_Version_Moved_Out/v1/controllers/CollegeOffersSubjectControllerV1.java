@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(COLLEGE_OFFERS_SUBJECT_PATH_V1)
+@RequestMapping(PathConstants.COLLEGE_OFFERS_SUBJECT_PATH_V1)
 @Slf4j
 public class CollegeOffersSubjectControllerV1 {
 

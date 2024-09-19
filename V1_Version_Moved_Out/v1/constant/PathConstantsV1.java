@@ -1,6 +1,6 @@
 package org.collegeWorks.collegeresults.constant;
 
-public class PathConstants {
+public class PathConstantsV1 {
 
   public static final String V1 = "/v1";
   public static final String V2 = "/v2";
@@ -14,7 +14,6 @@ public class PathConstants {
   public static final String COLLEGE_OFFERS_SUBJECT = "/collegeOffersSubjectOptional";
   public static final String CREDITS = "/credits";
   public static final String COLLEGES_PATH_V1 = V1 + COLLEGES;
-  public static final String COLLEGES_PATH_V2 = V2 + COLLEGES;
   public static final String COURSES_PATH_V1 = V1 + COURSES;
   public static final String SEMESTERS_PATH_V1 = V1 + SEMESTERS;
   public static final String STUDENTS_PATH_V1 = V1 + STUDENTS;

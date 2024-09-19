@@ -51,7 +51,7 @@ public class SubjectOptionalControllerV1 {
     return ResponseEntity.status(HttpStatus.OK).body(subjectOptional);
   }
 
-  @GetMapping(SUBJECT_OPTIONAL_GET_BY_SUBJECT_ID)
+  @GetMapping(PathConstants.SUBJECT_OPTIONAL_GET_BY_SUBJECT_ID)
   public ResponseEntity<List<SubjectOptionalDTOV1>> getSubjectOptionalBySubject(
       @PathVariable int subjectId) throws ServiceException {
     log.info(
@@ -61,7 +61,7 @@ public class SubjectOptionalControllerV1 {
     return ResponseEntity.ok(result);
   }
 
-  @GetMapping(SUBJECT_OPTIONAL_GET_BY_OPTIONAL_ID)
+  @GetMapping(PathConstants.SUBJECT_OPTIONAL_GET_BY_OPTIONAL_ID)
   public ResponseEntity<List<SubjectOptionalDTOV1>> getSubjectOptionalByOptional(
       @PathVariable int optionalId) throws ServiceException {
     log.info(
