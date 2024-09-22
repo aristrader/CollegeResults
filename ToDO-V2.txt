@@ -1,3 +1,6 @@
+Priority ->
+club the last 2 controllers of coursedetails
+
 1. have it in the app somewhere so that we can save the details of what all subjects the marks list has been received
 
 2. create proper indexes
@@ -11,3 +14,19 @@ NOTE : Ensure that all foreign key constraints are properly indexed to optimize 
 5. in the enrollement and marks table, have the columns added later for the created time and updated time.
 
 6. validation for emails and phone numbers etc in the request and proper error handling and response display for all
+
+7. for now any course name and any sem can be added, maybe we can have some constraints in that
+
+8. maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
+and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
+
+9. The constraints that we have in DB should properly reflect in the DTO and also in the request like the VARCHAR(100) and not null
+
+10. Add the application logic for only the allowed type of subject to be entered, also only allowed subject_options can also be used.
+
+11. There are some constraints that i have mentioned about in the ER diagram we created, make sure to implement them in the application.
+
+12. the v1 controller things separate it into a separate repo all together
+
+13. Do something about the constraints of practical marks, like the subject has practical only then
+the entry of practical number should be made in the db.
