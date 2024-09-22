@@ -19,3 +19,5 @@ NOTE : Ensure that all foreign key constraints are properly indexed to optimize 
 
 8. maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
 and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
+
+9. The constraints that we have in DB should properly reflect in the DTO and also in the request like the VARCHAR(100) and not null
