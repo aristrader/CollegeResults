@@ -1,0 +1,59 @@
+Primary
+
+Application related ->
+-> Read more on good practices while writing application codes, for example, the use of DTO.
+-> Club the last two controllers, of course-details and complete the other to-do's in the repo.
+-> have it in the app somewhere so that we can save the details of what all subjects the marks list has been received
+
+DB Related ->
+-> create proper indexes
+   NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
+          ********Add indexes on foreign key columns if not already automatically indexed **********
+
+Constraints ->
+-> for now any course name and any sem can be added, maybe we can have some constraints in that in the application logic.
+->The constraints that we have in DB should properly reflect in the DTO and also in the request like the VARCHAR(100) and not null
+->  Set the varchar 100 limitations on the entities as well. and other constraints
+-> Add the application logic for only the allowed type of subject to be entered, also only allowed subject_options can also be used.
+-> There are some constraints that i have mentioned about in the ER diagram we created, make sure to implement them in the application.
+-> Do something about the constraints of practical marks, like the subject has practical only then the entry of practical number should be made in the db.
+-> validation for emails and phone numbers etc in the request and proper error handling and response display for all.
+
+Exception handling ->
+-> better exception raising and handling, Proper error codes and error responses to know what went wrong in the code flow.
+
+Data population and testing scripts ->
+-> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
+-> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of sureity)
+-> when doing the above check if you need a transaction control.
+
+Testing ->
+-> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
+-> Think of all possible test cases and write a test for each kind of test case. Maybe we can use some unit testing here.
+-> maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
+and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
+
+
+Secondary
+
+1. Saving the data -> Have the database in some cloud application probably we can use aiven.io, also have a database backup
+2. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
+3. can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
+4. Add better logging. Also for logging if data dog or something is available to trace each call.
+5. the v1 controller things separate it into a separate repo all together
+6. Learn more about git, commit cleaning, main branch, etc, etc.
+
+After all this is complete higher versions ->
+search for open source options like moodle, understand them, look at if you can offer these via them to get each college there own system to work on.
+
+
+Future Scope related to database ->
+Class representative are not being added for now due to circular foreign ket reference, think of a solution
+Add the bidirectional mapping with proper relationships like one to one and join columns with proper fields like insertable ,etc. Also the fetch type should be lazy.
+Support batch updates in the application
+Versioning or locking (optimistic or pessimistic is not required for now as this is a single user system) i.e Concurrency control using optimistic or pessimistic locking, not required any when it is a single user handled system like right now.
+@Formula -> this can be added later in the marks table to keep all the calculated values in it only.
+@Check: Adds a check constraint to a database column or table. This can enforce rules at the database level. @Check(constraints = "marks >= 0 AND marks <= 100")
+Have the sql query printing true and start analysing all your queries.
+Cascading
+N+1 problem -> not necessarily existing in your system, but do read about it, some ways to resolve, using dto, using entitygraph, using @fetch
