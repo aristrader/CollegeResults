@@ -6,22 +6,9 @@ Application related ->
 -> have it in the app somewhere so that we can save the details of what all subjects the marks list has been received
 
 DB Related ->
--> continue the chatgpt and learn more about all the annotations that are there, make a doc as well.
-  There are a lot of other things as well you can read about and learn like cascading, versioning, data loading, etc.
 -> create proper indexes
    NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
           ********Add indexes on foreign key columns if not already automatically indexed **********
--> in the enrollment and marks table, have the columns added later for the created time and updated time.
--> Class representative are not being added for now due to circular foreign ket reference, think of a solution
--> Read more on the database code writing , for example these parts ->
-    @JoinColumn(name = "college_id", nullable = false, insertable = false, updatable = false)
-    Also add these in your own classes, the entity classes.
-    Example -> @ManyToOne(fetch = FetchType.LAZY, optional = false)
-                 @JoinColumn(name = "college_id", insertable = false, updatable = false)
-                 private CollegeEntityV1 college;
--> Read more about locks and locking in the database.
--> Read more on the transactions.
-->Do we need to Add the bidirectional mappings in the entity classes.
 
 Constraints ->
 -> for now any course name and any sem can be added, maybe we can have some constraints in that in the application logic.
@@ -38,6 +25,7 @@ Exception handling ->
 Data population and testing scripts ->
 -> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
 -> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of sureity)
+-> when doing the above check if you need a transaction control.
 
 Testing ->
 -> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
@@ -57,3 +45,15 @@ Secondary
 
 After all this is complete higher versions ->
 search for open source options like moodle, understand them, look at if you can offer these via them to get each college there own system to work on.
+
+
+Future Scope related to database ->
+Class representative are not being added for now due to circular foreign ket reference, think of a solution
+Add the bidirectional mapping with proper relationships like one to one and join columns with proper fields like insertable ,etc. Also the fetch type should be lazy.
+Support batch updates in the application
+Versioning or locking (optimistic or pessimistic is not required for now as this is a single user system) i.e Concurrency control using optimistic or pessimistic locking, not required any when it is a single user handled system like right now.
+@Formula -> this can be added later in the marks table to keep all the calculated values in it only.
+@Check: Adds a check constraint to a database column or table. This can enforce rules at the database level. @Check(constraints = "marks >= 0 AND marks <= 100")
+Have the sql query printing true and start analysing all your queries.
+Cascading
+N+1 problem -> not necessarily existing in your system, but do read about it, some ways to resolve, using dto, using entitygraph, using @fetch

@@ -1,6 +1,6 @@
 CREATE DATABASE college_results_db_v2;
 
-use college_results_db_v2;
+USE college_results_db_v2;
 
 -- Stores information about colleges with a unique combination of name and address.
 CREATE TABLE college (
@@ -11,6 +11,8 @@ CREATE TABLE college (
     website VARCHAR(100),
     address VARCHAR(255) NOT NULL,
     phone_number INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE (college_name, address)  -- Unique constraint on college_name and address
 );
 
@@ -24,6 +26,8 @@ CREATE TABLE teacher (
     phone_number VARCHAR(10) UNIQUE,
     specialization VARCHAR(100),
     photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (college_id) REFERENCES college(college_id)
 );
 
@@ -34,6 +38,8 @@ CREATE TABLE course_details (
     sem INT NOT NULL,
     class_teacher_id INT,  -- Foreign key from teacher table, can be NULL
     -- class_representative_id INT,  -- Foreign key from student table, can be NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE (college_id, course_name, sem),  -- Unique combo of college_id, course_name, and sem
     FOREIGN KEY (college_id) REFERENCES college(college_id),  -- References college table
     FOREIGN KEY (class_teacher_id) REFERENCES teacher(teacher_id)  -- References teacher table
@@ -53,6 +59,8 @@ CREATE TABLE student (
     enrollment_no VARCHAR(100) NOT NULL,
     course_details_id INT NOT NULL,
     photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- added new
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- added new
     UNIQUE (roll_no, course_details_id),  -- Unique combo of roll_no and course_details_id
     UNIQUE (enrollment_no, course_details_id),  -- Unique combo of enrollment_no and course_details_id
     FOREIGN KEY (course_details_id) REFERENCES course_details(course_details_id)
@@ -67,6 +75,8 @@ CREATE TABLE subject_details (
     max_credits_subject INT NOT NULL,
     max_credits_practical INT,
     subject_teacher_id INT,  -- Adjusted data type to match teacher_id
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- added new
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- added new
     UNIQUE (course_details_id, subject_type, options_name),  -- Unique combo of course_details_id, subject_type, and options_name
     FOREIGN KEY (course_details_id) REFERENCES course_details(course_details_id),
     FOREIGN KEY (subject_teacher_id) REFERENCES teacher(teacher_id)  -- Foreign key to teacher table
@@ -80,6 +90,8 @@ CREATE TABLE enrollment_and_marks (
     main_marks INT,
     cce INT,
     practical_marks INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- added new
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- added new
     UNIQUE (student_id, subject_details_id),  -- Unique combo of student_id and subject_details_id
     FOREIGN KEY (student_id) REFERENCES student(student_id),
     FOREIGN KEY (subject_details_id) REFERENCES subject_details(subject_details_id)
