@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
+import org.collegeWorks.collegeresults.helper.InputConstraints;
 import org.collegeWorks.collegeresults.v2.dto.SubjectDetailsDTOV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.SubjectDetailsEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.SubjectDetailsRepositoryV2;
@@ -19,6 +20,9 @@ public class SubjectDetailsServiceV2 {
   private SubjectDetailsRepositoryV2 subjectDetailsRepository;
 
   public Integer addSubjectDetails(SubjectDetailsRequestV2 request) throws ServiceException {
+    if (!InputConstraints.isValidSubjectType(request.getSubjectType())) {
+      throw new ServiceException("[SubjectDetailsServiceV2] Invalid subject type provided.");
+    }
     try {
       SubjectDetailsEntityV2 entity = convertRequestToEntity(request);
       return subjectDetailsRepository.save(entity).getId();

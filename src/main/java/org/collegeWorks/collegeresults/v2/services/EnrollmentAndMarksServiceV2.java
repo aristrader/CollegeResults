@@ -6,7 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
 import org.collegeWorks.collegeresults.v2.dto.EnrollmentAndMarksDTOV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.EnrollmentAndMarksEntityV2;
+import org.collegeWorks.collegeresults.v2.jpa.entity.StudentEntityV2;
+import org.collegeWorks.collegeresults.v2.jpa.entity.SubjectDetailsEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.EnrollmentAndMarksRepositoryV2;
+import org.collegeWorks.collegeresults.v2.jpa.repository.StudentRepositoryV2;
+import org.collegeWorks.collegeresults.v2.jpa.repository.SubjectDetailsRepositoryV2;
 import org.collegeWorks.collegeresults.v2.model.EnrollmentAndMarksRequestV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,29 @@ public class EnrollmentAndMarksServiceV2 {
 
   @Autowired
   private EnrollmentAndMarksRepositoryV2 enrollmentAndMarksRepository;
+  @Autowired
+  private StudentRepositoryV2 studentRepository;
+
+  @Autowired
+  private SubjectDetailsRepositoryV2 subjectDetailsRepository;
 
   public Integer addEnrollmentAndMarks(EnrollmentAndMarksRequestV2 request)
       throws ServiceException {
+
+    StudentEntityV2 studentEntity = studentRepository.findById(request.getStudentId())
+        .orElseThrow(() -> new ServiceException("Student not found"));
+
+    // Fetch the subject details entity
+    SubjectDetailsEntityV2 subjectDetailsEntity = subjectDetailsRepository.findById(
+            request.getSubjectDetailsId())
+        .orElseThrow(() -> new ServiceException("Subject details not found"));
+
+    // Validate if both student and subject belong to the same college
+    if (!studentEntity.getCourseDetailsId().equals(subjectDetailsEntity.getCourseDetailsId())) {
+      throw new ServiceException(
+          "The student and the subject details do not belong to the same college.");
+    }
+
     try {
       EnrollmentAndMarksEntityV2 entity = convertRequestToEntity(request);
       return enrollmentAndMarksRepository.save(entity).getId();

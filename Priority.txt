@@ -10,17 +10,9 @@ DB Related ->
    NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
           ********Add indexes on foreign key columns if not already automatically indexed **********
 
-Constraints ->
--> for now any course name and any sem can be added, maybe we can have some constraints in that in the application logic.
-->The constraints that we have in DB should properly reflect in the DTO and also in the request like the VARCHAR(100) and not null
-->  Set the varchar 100 limitations on the entities as well. and other constraints
--> Add the application logic for only the allowed type of subject to be entered, also only allowed subject_options can also be used.
--> There are some constraints that i have mentioned about in the ER diagram we created, make sure to implement them in the application.
--> Do something about the constraints of practical marks, like the subject has practical only then the entry of practical number should be made in the db.
--> validation for emails and phone numbers etc in the request and proper error handling and response display for all.
-
 Exception handling ->
 -> better exception raising and handling, Proper error codes and error responses to know what went wrong in the code flow.
+-> Also proper error handling when the constraint violations are there.
 
 Data population and testing scripts ->
 -> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
@@ -33,8 +25,16 @@ Testing ->
 -> maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
 and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
 
+Have a look at the TO-DO's left in the repo as comments. (Search the word in the whole project)
 
 Secondary
+
+first ->
+1. something to restrict the option names
+2. there may be subject that have only practical, will need to change the constraints in that case.
+3. Having the constraint of only fixed subject_options for a college and subject_type
+4. Do something about the constraints of practical marks, like the subject has practical only then the entry of practical number should be made in the db.
+5. The logic to check the student and subject belong to same college may be optimised.
 
 1. Saving the data -> Have the database in some cloud application probably we can use aiven.io, also have a database backup
 2. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)

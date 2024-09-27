@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
+import org.collegeWorks.collegeresults.helper.InputConstraints;
 import org.collegeWorks.collegeresults.v2.dto.CourseDetailsDTOV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.CourseDetailsEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.CourseDetailsRepositoryV2;
@@ -20,6 +21,17 @@ public class CourseDetailsServiceV2 {
   private CourseDetailsRepositoryV2 courseRepository;
 
   public Integer addCourse(CourseDetailsRequestV2 request) throws ServiceException {
+
+    // Validate course name using the Map
+    if (!InputConstraints.isValidCourse(request.getCourseName())) {
+      throw new ServiceException("Invalid course name. Allowed values are: BCOM, BSC, BA.");
+    }
+
+    // Validate semester using the Map
+    if (!InputConstraints.isValidSemester(request.getSemester())) {
+      throw new ServiceException("Invalid semester. Allowed values are: 1, 2, 3, 4, 5, 6, 7, 8");
+    }
+
     try {
       CourseDetailsEntityV2 entity = convertRequestToEntity(request);
       return courseRepository.save(entity).getId();
