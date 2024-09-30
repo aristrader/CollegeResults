@@ -3,7 +3,7 @@ Primary
 Application related ->
 -> Read more on good practices while writing application codes, for example, the use of DTO.
 -> Club the last two controllers, of course-details and complete the other to-do's in the repo.
--> have it in the app somewhere so that we can save the details of what all subjects the marks list has been received
+-> have it in the app somewhere so that we can save the details of what all subjects the mark list has been received
 
 DB Related ->
 -> create proper indexes
@@ -12,44 +12,77 @@ DB Related ->
 
 Data population and testing scripts ->
 -> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
--> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of sureity)
+-> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of surety)
 -> when doing the above check if you need a transaction control.
 
 Testing ->
 -> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
 -> Think of all possible test cases and write a test for each kind of test case. Maybe we can use some unit testing here.
--> maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
-and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
+-> Maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college,
+and in parallel, we will also have the data for saving the number of students whose data we have stored this can work as a validation.
 
 Have a look at the TO-DO left in the repo as comments. (Search the word in the whole project)
 
+STEPS -> (All look at the indexes that would be required for working with this)
+1. Create a script to generate student data in the given format.
+2. After we have the list -Group the subjects of each type and display as a list to make sure there are no typing errors.
+  ex -> foundation courses : abc, def, ghi, lmn. (This is more of precautious step to avoid issues in the very beginning)
+3. Make sure the college exists.
+4. Make sure the course_details is populated for that college.
+5. Now first add list of all students (Error cases -> validation failure on request body,
+        duplicate roll no or enrollment no, or unknown exception occurs)
+6. Add each individual subject in the database (Error cases -> validation failure on request body, failure on save (although
+        check if we should implement a function where in the save and retrieve if already save is there), or unknown exceptions)
+7. Now enroll each student in the subjects specified (Error cases -> validation failure on request body, unknown exception)
+
+next script ->
+get all the lists subject wise for each type of subject and each subject option containing all students enrolled in them
+
+next script ->
+create a script to combine all the above data and match with the original list.
+
+next script ->
+create a script that takes the input of student, subject , etc and populates it with random marks.
+
+next ->
+populate these marks in the database.
+
+next script -> get all the marks from the database and combine it and match with the original excel. This is again a
+  validation step to make sure all entries happened correctly.
+
+Final script ->
+create the end result as required by the college.
+
+Marks kis format me aate hai, number and practical number, kab pata chalta hai ki subject me practical hai ki nahi.
+Kis subject ke kite credits hai ye kab aur kaise pata chalta.
+
 Secondary
 
-first ->
-1. something to restrict the option names
-2. there may be subject that have only practical, will need to change the constraints in that case.
+First ->
+1. Something to restrict option names
+2. There may be subject that has only practical, will need to change the constraints in that case.
 3. Having the constraint of only fixed subject_options for a college and subject_type
-4. Do something about the constraints of practical marks, like the subject has practical only then the entry of practical number should be made in the db.
-5. The logic to check the student and subject belong to same college may be optimised.
+4. Do something about the constraints of practical marks; like the subject has practical only then the entry of practical number should be made in the db.
+5. The logic to check the student and subject belong to the same college may be optimized.
 
-1. Saving the data -> Have the database in some cloud application probably we can use aiven.io, also have a database backup
+1. Saving the data -> Have the database in some cloud application probably we can use aiven.io, also have database backup
 2. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
-3. can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
-4. Add better logging. Also for logging if data dog or something is available to trace each call.
-5. the v1 controller things separate it into a separate repo all together
-6. Learn more about git, commit cleaning, main branch, etc, etc.
+3. Can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
+4. Add better logging. Also for logging if datadog or something is available to trace each call.
+5. The v1 controller things separate it into a separate repo all together
+6. Learn more about git, commit cleaning, main branch, etc.
 
-After all this is complete higher versions ->
-search for open source options like moodle, understand them, look at if you can offer these via them to get each college there own system to work on.
+After the above is completed, higher versions ->
+search for open source options like moodle, understand them, look at if you can offer these via them to get each college their own system to work on.
 
 
-Future Scope related to database ->
+Future Scopes related to database ->
 Class representative are not being added for now due to circular foreign ket reference, think of a solution
-Add the bidirectional mapping with proper relationships like one to one and join columns with proper fields like insertable ,etc. Also the fetch type should be lazy.
+Add the bidirectional mapping with proper relationships like one to one and join columns with proper fields like insertable, etc. Also, the fetch type should be lazy.
 Support batch updates in the application
-Versioning or locking (optimistic or pessimistic is not required for now as this is a single user system) i.e Concurrency control using optimistic or pessimistic locking, not required any when it is a single user handled system like right now.
-@Formula -> this can be added later in the marks table to keep all the calculated values in it only.
+Versioning or locking (optimistic or pessimistic is not required for now as this is a single user system) i.e., Concurrency control using optimistic or pessimistic locking, not required any when it is a single user handled system like right now.
+@Formula -> this can be added later in the mark table to keep all the calculated values in it only.
 @Check: Adds a check constraint to a database column or table. This can enforce rules at the database level. @Check(constraints = "marks >= 0 AND marks <= 100")
-Have the sql query printing true and start analysing all your queries.
+Have the sql query printing true and start analyzing all your queries.
 Cascading
-N+1 problem -> not necessarily existing in your system, but do read about it, some ways to resolve, using dto, using entitygraph, using @fetch
+N+1 problem -> not necessarily existing in your system, but do read about it, some ways to resolve, using dto, using entityGraph, using @fetch
