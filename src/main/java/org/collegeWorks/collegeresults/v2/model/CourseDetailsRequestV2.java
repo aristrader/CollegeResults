@@ -6,12 +6,16 @@ import lombok.Data;
 
 @Data
 public class CourseDetailsRequestV2 {
-  @NotNull
+
+  @NotNull(message = "College ID cannot be null")
   private Integer collegeId;
-  @NotNull
-  @Size(max = 100)
+
+  @NotNull(message = "Course name cannot be null")
+  @Size(max = 100, message = "Course name cannot exceed 100 characters")
   private String courseName;
-  @NotNull
+
+  @NotNull(message = "Semester cannot be null")
   private Integer semester;
+
   private Integer classTeacherId;
 }

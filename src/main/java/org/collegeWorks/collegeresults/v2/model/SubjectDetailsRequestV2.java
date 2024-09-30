@@ -7,18 +7,18 @@ import lombok.Data;
 @Data
 public class SubjectDetailsRequestV2 {
 
-  @NotNull
+  @NotNull(message = "Course details ID cannot be null")
   private Integer courseDetailsId;
 
-  @NotNull
-  @Size(max = 50)
+  @NotNull(message = "Subject type cannot be null")
+  @Size(max = 50, message = "Subject type cannot be more than 50 characters")
   private String subjectType;
 
-  @NotNull
-  @Size(max = 100)
+  @NotNull(message = "Options name cannot be null")
+  @Size(max = 100, message = "Options name cannot be more than 100 characters")
   private String optionsName;
 
-  @NotNull
+  @NotNull(message = "Maximum subject credits cannot be null")
   private Integer maxCreditsSubject;
 
   private Integer maxCreditsPractical;

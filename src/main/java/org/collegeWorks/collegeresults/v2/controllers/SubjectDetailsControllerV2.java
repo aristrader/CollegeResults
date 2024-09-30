@@ -32,7 +32,6 @@ public class SubjectDetailsControllerV2 {
   @Autowired
   private SubjectDetailsServiceV2 subjectDetailsService;
 
-  //TODO: Add the application level logic for restricting the subject type and options
   @PostMapping(PathConstantsV2.ADD)
   public ResponseEntity<RestResponse> addSubjectDetails(
       @Valid @RequestBody SubjectDetailsRequestV2 request) throws ServiceException {
@@ -66,7 +65,7 @@ public class SubjectDetailsControllerV2 {
     return ResponseEntity.ok(response);
   }
 
-  // TODO: Change the implementation later because there is unique constraint so there will always be only 1 entry that is returned
+  // TODO: Change the implementation later because there is unique constraint so there will always be only 1 entry that is returned so no need for list
   @GetMapping(GET_SUBJECTS_BY_COURSE_TYPE_AND_OPTIONS)
   public ResponseEntity<RestResponse> getSubjectsByCourseTypeAndOptions(
       @PathVariable("courseDetailsId") int courseDetailsId,

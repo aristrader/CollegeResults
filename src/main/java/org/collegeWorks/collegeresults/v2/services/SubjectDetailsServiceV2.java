@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
+import org.collegeWorks.collegeresults.exception.ServiceException.CollegeServiceErrorCodes;
+import org.collegeWorks.collegeresults.helper.InputConstraints;
 import org.collegeWorks.collegeresults.v2.dto.SubjectDetailsDTOV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.SubjectDetailsEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.SubjectDetailsRepositoryV2;
 import org.collegeWorks.collegeresults.v2.model.SubjectDetailsRequestV2;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,12 +23,40 @@ public class SubjectDetailsServiceV2 {
   private SubjectDetailsRepositoryV2 subjectDetailsRepository;
 
   public Integer addSubjectDetails(SubjectDetailsRequestV2 request) throws ServiceException {
+    if (!InputConstraints.isValidSubjectType(request.getSubjectType())) {
+      throw new ServiceException("[SubjectDetailsServiceV2] Invalid subject type provided.",
+          CollegeServiceErrorCodes.INVALID_VALUES_FOR_REQUIRED_PARAMETER);
+    }
     try {
       SubjectDetailsEntityV2 entity = convertRequestToEntity(request);
       return subjectDetailsRepository.save(entity).getId();
+    } catch (DataIntegrityViolationException e) {
+      // Here you can check the cause to differentiate further if needed
+      Throwable cause = e.getCause();
+      if (cause instanceof ConstraintViolationException) {
+        String message = cause.getMessage();
+        if (message.contains("Duplicate entry")) {
+          throw new ServiceException(
+              "[SubjectDetailsServiceV2] Unique or Primary Key constraint violation: " + message,
+              CollegeServiceErrorCodes.DUPLICATE_DATA);
+        } else if (message.contains("foreign key constraint fails")) {
+          throw new ServiceException(
+              "[SubjectDetailsServiceV2] Foreign Key constraint violation: " + message,
+              CollegeServiceErrorCodes.FOREIGN_KEY_CONSTRAINT_VIOLATION);
+        } else {
+          throw new ServiceException(
+              "[SubjectDetailsServiceV2] Other constraint violation: " + message,
+              CollegeServiceErrorCodes.DATA_PERSISTENCE_ERROR);
+        }
+      } else {
+        throw new ServiceException(
+            "[SubjectDetailsServiceV2] Data integrity violation: " + e.getMessage(),
+            CollegeServiceErrorCodes.DATA_PERSISTENCE_ERROR);
+      }
     } catch (Exception e) {
       throw new ServiceException(
-          "[SubjectDetailsServiceV2] Failed to add subject details: " + e.getMessage());
+          "[SubjectDetailsServiceV2] Failed to add subject details: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -35,14 +67,16 @@ public class SubjectDetailsServiceV2 {
           courseDetailsId);
       if (entities.isEmpty()) {
         throw new ServiceException(
-            "[SubjectDetailsServiceV2] No subjects found for course ID: " + courseDetailsId);
+            "[SubjectDetailsServiceV2] No subjects found for course ID: " + courseDetailsId,
+            CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
       throw e;
     } catch (Exception e) {
       throw new ServiceException(
-          "[SubjectDetailsServiceV2] Failed to fetch subjects by course: " + e.getMessage());
+          "[SubjectDetailsServiceV2] Failed to fetch subjects by course: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -54,14 +88,15 @@ public class SubjectDetailsServiceV2 {
       if (entities.isEmpty()) {
         throw new ServiceException(
             "[SubjectDetailsServiceV2] No subjects found for course ID: " + courseDetailsId
-                + " and type: " + subjectType);
+                + " and type: " + subjectType, CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
       throw e;
     } catch (Exception e) {
       throw new ServiceException(
-          "[SubjectDetailsServiceV2] Failed to fetch subjects by type: " + e.getMessage());
+          "[SubjectDetailsServiceV2] Failed to fetch subjects by type: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -73,7 +108,8 @@ public class SubjectDetailsServiceV2 {
       if (entities.isEmpty()) {
         throw new ServiceException(
             "[SubjectDetailsServiceV2] No subjects found for course ID: " + courseDetailsId
-                + ", type: " + subjectType + ", and options: " + optionsName);
+                + ", type: " + subjectType + ", and options: " + optionsName,
+            CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
@@ -81,7 +117,7 @@ public class SubjectDetailsServiceV2 {
     } catch (Exception e) {
       throw new ServiceException(
           "[SubjectDetailsServiceV2] Failed to fetch subjects by course, type, and options: "
-              + e.getMessage());
+              + e.getMessage(), CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -92,14 +128,16 @@ public class SubjectDetailsServiceV2 {
           teacherId);
       if (entities.isEmpty()) {
         throw new ServiceException(
-            "[SubjectDetailsServiceV2] No subjects found for teacher ID: " + teacherId);
+            "[SubjectDetailsServiceV2] No subjects found for teacher ID: " + teacherId,
+            CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
       throw e;
     } catch (Exception e) {
       throw new ServiceException(
-          "[SubjectDetailsServiceV2] Failed to fetch subjects by teacher ID: " + e.getMessage());
+          "[SubjectDetailsServiceV2] Failed to fetch subjects by teacher ID: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
