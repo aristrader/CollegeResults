@@ -61,7 +61,7 @@ public class CollegeControllerV1 {
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
-  // TODO:
+  // NEED TO DO THE BELOW IN CASE WE ARE MOVING BACK TO V1
   // Update already existing college details like director, etc. But no update to college name and address.
   // Question while looking at the above case -> Can we just have the college name as unique??
 

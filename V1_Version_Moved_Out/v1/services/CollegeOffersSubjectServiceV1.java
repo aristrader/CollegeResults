@@ -57,7 +57,7 @@ public class CollegeOffersSubjectServiceV1 {
   public List<CollegeOffersSubjectDTOV1> getSubjectsByCollegeCourseSem(int collegeId, int courseId,
       int semId) throws ServiceException {
     try {
-      // TODO: Maybe this can be improved by having a custom query that even gives the subject name and option name in response.
+      // TO DO If we move back to V1 version : Maybe this can be improved by having a custom query that even gives the subject name and option name in response.
       List<CollegeOffersSubjectEntityV1> entities = collegeOffersSubjectRepository.findByCollegeIdAndCourseIdAndSemId(
           collegeId, courseId, semId);
       if (entities.isEmpty()) {

@@ -10,10 +10,6 @@ DB Related ->
    NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
           ********Add indexes on foreign key columns if not already automatically indexed **********
 
-Exception handling ->
--> better exception raising and handling, Proper error codes and error responses to know what went wrong in the code flow.
--> Also proper error handling when the constraint violations are there.
-
 Data population and testing scripts ->
 -> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
 -> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of sureity)
@@ -25,7 +21,7 @@ Testing ->
 -> maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college
 and parallel we will also have the data for saving the number of students whose data we have stored this can work as an validation.
 
-Have a look at the TO-DO's left in the repo as comments. (Search the word in the whole project)
+Have a look at the TO-DO left in the repo as comments. (Search the word in the whole project)
 
 Secondary
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
+import org.collegeWorks.collegeresults.exception.ServiceException.CollegeServiceErrorCodes;
 import org.collegeWorks.collegeresults.v2.dto.EnrollmentAndMarksDTOV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.EnrollmentAndMarksEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.entity.StudentEntityV2;
@@ -12,7 +13,9 @@ import org.collegeWorks.collegeresults.v2.jpa.repository.EnrollmentAndMarksRepos
 import org.collegeWorks.collegeresults.v2.jpa.repository.StudentRepositoryV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.SubjectDetailsRepositoryV2;
 import org.collegeWorks.collegeresults.v2.model.EnrollmentAndMarksRequestV2;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,26 +33,51 @@ public class EnrollmentAndMarksServiceV2 {
   public Integer addEnrollmentAndMarks(EnrollmentAndMarksRequestV2 request)
       throws ServiceException {
 
-    StudentEntityV2 studentEntity = studentRepository.findById(request.getStudentId())
-        .orElseThrow(() -> new ServiceException("Student not found"));
+    StudentEntityV2 studentEntity = studentRepository.findById(request.getStudentId()).orElseThrow(
+        () -> new ServiceException("Student not found",
+            CollegeServiceErrorCodes.STUDENT_DETAILS_NOT_FOUND));
 
     // Fetch the subject details entity
     SubjectDetailsEntityV2 subjectDetailsEntity = subjectDetailsRepository.findById(
-            request.getSubjectDetailsId())
-        .orElseThrow(() -> new ServiceException("Subject details not found"));
+        request.getSubjectDetailsId()).orElseThrow(
+        () -> new ServiceException("Subject details not found",
+            CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND));
 
     // Validate if both student and subject belong to the same college
     if (!studentEntity.getCourseDetailsId().equals(subjectDetailsEntity.getCourseDetailsId())) {
       throw new ServiceException(
-          "The student and the subject details do not belong to the same college.");
+          "The student and the subject details do not belong to the same college.",
+          CollegeServiceErrorCodes.ENROLLMENT_FAILURE_STUDENT_AND_SUBJECT_FROM_DIFFERENT_COLLEGE);
     }
 
     try {
       EnrollmentAndMarksEntityV2 entity = convertRequestToEntity(request);
       return enrollmentAndMarksRepository.save(entity).getId();
+    } catch (DataIntegrityViolationException e) {
+      // Here you can check the cause to differentiate further if needed
+      Throwable cause = e.getCause();
+      if (cause instanceof ConstraintViolationException) {
+        String message = cause.getMessage();
+        if (message.contains("Duplicate entry")) {
+          throw new ServiceException(
+              "[StudentServiceV2] Unique or Primary Key constraint violation: " + message,
+              CollegeServiceErrorCodes.DUPLICATE_DATA);
+        } else if (message.contains("foreign key constraint fails")) {
+          throw new ServiceException(
+              "[StudentServiceV2] Foreign Key constraint violation: " + message,
+              CollegeServiceErrorCodes.FOREIGN_KEY_CONSTRAINT_VIOLATION);
+        } else {
+          throw new ServiceException("[StudentServiceV2] Other constraint violation: " + message,
+              CollegeServiceErrorCodes.DATA_PERSISTENCE_ERROR);
+        }
+      } else {
+        throw new ServiceException("[StudentServiceV2] Data integrity violation: " + e.getMessage(),
+            CollegeServiceErrorCodes.DATA_PERSISTENCE_ERROR);
+      }
     } catch (Exception e) {
       throw new ServiceException(
-          "[EnrollmentAndMarksServiceV2] Failed to add enrollment and marks: " + e.getMessage());
+          "[EnrollmentAndMarksServiceV2] Failed to add enrollment and marks: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -60,7 +88,7 @@ public class EnrollmentAndMarksServiceV2 {
       if (entities.isEmpty()) {
         throw new ServiceException(
             "[EnrollmentAndMarksServiceV2] No enrollment and marks found for student ID: "
-                + studentId);
+                + studentId, CollegeServiceErrorCodes.ENROLLMENT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
@@ -68,7 +96,7 @@ public class EnrollmentAndMarksServiceV2 {
     } catch (Exception e) {
       throw new ServiceException(
           "[EnrollmentAndMarksServiceV2] Failed to retrieve enrollment and marks: "
-              + e.getMessage());
+              + e.getMessage(), CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -80,7 +108,7 @@ public class EnrollmentAndMarksServiceV2 {
       if (entities.isEmpty()) {
         throw new ServiceException(
             "[EnrollmentAndMarksServiceV2] No enrollment and marks found for subject details ID: "
-                + subjectDetailsId);
+                + subjectDetailsId, CollegeServiceErrorCodes.ENROLLMENT_DETAILS_NOT_FOUND);
       }
       return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     } catch (ServiceException e) {
@@ -88,7 +116,7 @@ public class EnrollmentAndMarksServiceV2 {
     } catch (Exception e) {
       throw new ServiceException(
           "[EnrollmentAndMarksServiceV2] Failed to retrieve enrollment and marks: "
-              + e.getMessage());
+              + e.getMessage(), CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
     }
   }
 
