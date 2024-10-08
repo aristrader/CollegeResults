@@ -6,6 +6,7 @@ import static org.collegeWorks.collegeresults.constant.PathConstantsV2.STUDENTS_
 
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstantsV2;
 import org.collegeWorks.collegeresults.exception.ServiceException;
@@ -13,7 +14,6 @@ import org.collegeWorks.collegeresults.rest.RestResponse;
 import org.collegeWorks.collegeresults.v2.dto.StudentDTOV2;
 import org.collegeWorks.collegeresults.v2.model.StudentRequestV2;
 import org.collegeWorks.collegeresults.v2.services.StudentServiceV2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(STUDENTS_PATH_V2)
 @Slf4j
+@RequiredArgsConstructor
 public class StudentControllerV2 {
 
-  @Autowired
-  private StudentServiceV2 studentService;
+  private final StudentServiceV2 studentService;
 
   @PostMapping("/add")
   public ResponseEntity<RestResponse> addStudent(@Valid @RequestBody StudentRequestV2 request)
@@ -40,6 +40,16 @@ public class StudentControllerV2 {
     RestResponse response = RestResponse.successResponse(
         String.format("The student has been successfully inserted with id : %d", studentIdCreated));
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  @GetMapping(PathConstantsV2.GET_BY_ID)
+  public ResponseEntity<RestResponse> getStudentById(@PathVariable("id") Integer studentId)
+      throws ServiceException {
+    log.info("[StudentControllerV2] Received request to get student details by studentid: {}",
+        studentId);
+    StudentDTOV2 result = studentService.getStudentById(studentId);
+    RestResponse response = RestResponse.successResponse(result);
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping(PathConstantsV2.GET_BY_COURSE_DETAILS_ID)
