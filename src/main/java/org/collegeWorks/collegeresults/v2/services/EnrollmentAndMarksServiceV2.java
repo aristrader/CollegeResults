@@ -81,6 +81,22 @@ public class EnrollmentAndMarksServiceV2 {
     }
   }
 
+  public void updateMarks(EnrollmentAndMarksRequestV2 request) throws ServiceException {
+    // Check if the enrollment and marks entry exists
+    EnrollmentAndMarksEntityV2 existingEntry = enrollmentAndMarksRepository.findByStudentIdAndSubjectDetailsId(
+        request.getStudentId(), request.getSubjectDetailsId()).orElseThrow(
+        () -> new ServiceException("Enrollment and marks entry not found",
+            CollegeServiceErrorCodes.ENROLLMENT_DETAILS_NOT_FOUND));
+
+    // Update the entry with the provided marks
+    existingEntry.setMainMarks(request.getMainMarks());
+    existingEntry.setCce(request.getCce());
+    existingEntry.setPracticalMarks(request.getPracticalMarks());
+
+    enrollmentAndMarksRepository.save(existingEntry);
+  }
+
+
   public List<EnrollmentAndMarksDTOV2> getByStudentId(int studentId) throws ServiceException {
     try {
       List<EnrollmentAndMarksEntityV2> entities = enrollmentAndMarksRepository.findByStudentId(

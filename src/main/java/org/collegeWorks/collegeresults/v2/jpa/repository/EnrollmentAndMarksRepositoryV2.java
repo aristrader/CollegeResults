@@ -1,5 +1,6 @@
 package org.collegeWorks.collegeresults.v2.jpa.repository;
 
+import java.util.Optional;
 import org.collegeWorks.collegeresults.v2.jpa.entity.EnrollmentAndMarksEntityV2;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,4 +10,5 @@ public interface EnrollmentAndMarksRepositoryV2 extends JpaRepository<Enrollment
 
   List<EnrollmentAndMarksEntityV2> findByStudentId(Integer studentId);
   List<EnrollmentAndMarksEntityV2> findBySubjectDetailsId(Integer subjectDetailsId);
+  Optional<EnrollmentAndMarksEntityV2> findByStudentIdAndSubjectDetailsId(Integer studentId, Integer subjectDetailsId);
 }
