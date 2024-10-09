@@ -96,6 +96,15 @@ public class EnrollmentAndMarksServiceV2 {
     enrollmentAndMarksRepository.save(existingEntry);
   }
 
+  public EnrollmentAndMarksDTOV2 getByStudentAndSubjectId(int studentId, int subjectDetailsId)
+      throws ServiceException {
+    EnrollmentAndMarksEntityV2 entity = enrollmentAndMarksRepository.findByStudentIdAndSubjectDetailsId(
+        studentId, subjectDetailsId).orElseThrow(
+        () -> new ServiceException("Enrollment and marks entry not found",
+            CollegeServiceErrorCodes.ENROLLMENT_DETAILS_NOT_FOUND));
+
+    return convertEntityToDTO(entity);
+  }
 
   public List<EnrollmentAndMarksDTOV2> getByStudentId(int studentId) throws ServiceException {
     try {

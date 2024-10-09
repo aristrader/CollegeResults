@@ -33,5 +33,5 @@ public class PathConstantsV2 {
   public static final String GET_SUBJECTS_BY_TEACHER_ID = "/teacher/{teacherId}";
   public static final String GET_BY_STUDENT_ID = "/getByStudentId/{studentId}";
   public static final String GET_BY_SUBJECT_DETAILS_ID = "/getBySubjectDetailsId/{subjectDetailsId}";
-
+  public static final String GET_BY_STUDENT_AND_SUBJECT_ID = "/getByStudentAndSubjectId/{studentId}/{subjectDetailsId}";
 }

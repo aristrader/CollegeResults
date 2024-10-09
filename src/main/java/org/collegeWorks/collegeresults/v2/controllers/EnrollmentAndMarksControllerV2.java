@@ -73,5 +73,16 @@ public class EnrollmentAndMarksControllerV2 {
     return ResponseEntity.ok(response);
   }
 
-  //TODO: Add the controller to update the marks of a student
+  @GetMapping(PathConstantsV2.GET_BY_STUDENT_AND_SUBJECT_ID)
+  public ResponseEntity<RestResponse> getByStudentAndSubjectId(
+      @PathVariable("studentId") int studentId,
+      @PathVariable("subjectDetailsId") int subjectDetailsId) throws ServiceException {
+    log.info("[EnrollmentAndMarksControllerV2] Received request to get enrollment and marks by student ID: {} and subject details ID: {}",
+        studentId, subjectDetailsId);
+
+    EnrollmentAndMarksDTOV2 result = enrollmentAndMarksService.getByStudentAndSubjectId(studentId, subjectDetailsId);
+
+    RestResponse response = RestResponse.successResponse(result);
+    return ResponseEntity.ok(response);
+  }
 }
