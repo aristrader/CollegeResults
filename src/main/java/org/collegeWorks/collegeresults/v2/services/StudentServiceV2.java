@@ -58,6 +58,8 @@ public class StudentServiceV2 {
           () -> new ServiceException("[StudentServiceV2] Student not found with given studentId",
               CollegeServiceErrorCodes.STUDENT_DETAILS_NOT_FOUND));
       return convertEntityToDTO(entity);
+    } catch (ServiceException e) {
+      throw e;
     } catch (Exception e) {
       throw new ServiceException(
           "[StudentServiceV2] Failed to retrieve student with the given id: " + e.getMessage(),

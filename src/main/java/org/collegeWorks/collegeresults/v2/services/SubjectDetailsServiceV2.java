@@ -60,6 +60,22 @@ public class SubjectDetailsServiceV2 {
     }
   }
 
+  public SubjectDetailsDTOV2 getSubjectById(Integer subjectId) throws ServiceException {
+    try {
+      SubjectDetailsEntityV2 entity = subjectDetailsRepository.findById(subjectId).orElseThrow(
+          () -> new ServiceException(
+              "[SubjectDetailsServiceV2] Subject details not found with given subjectId",
+              CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND));
+      return convertEntityToDTO(entity);
+    } catch (ServiceException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new ServiceException(
+          "[SubjectDetailsServiceV2] Failed to retrieve subjectDetails with the given id: "
+              + e.getMessage(), CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   public List<SubjectDetailsDTOV2> getAllSubjectsByCourse(int courseDetailsId)
       throws ServiceException {
     try {
