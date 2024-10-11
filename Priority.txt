@@ -12,8 +12,6 @@ DB Related ->
 Testing ->
 -> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
 -> Think of all possible test cases and write a test for each kind of test case. Maybe we can use some unit testing here.
--> Maybe we can even maintain somewhere the number of students that are enrolled in a college this will be data given by college,
-and in parallel, we will also have the data for saving the number of students whose data we have stored this can work as a validation.
 
 Have a look at the TO-DO left in the repo as comments. (Search the word in the whole project)
 

@@ -1,4 +1,0 @@
-1. maybe we can have a single table connecting the college course and sem.
-this way we can know which college offers what all courses and what all sems.
-also this can help ensure the mappings are not mixed up in the student table.
-Have the bidirectional mapping in this table maybe it will help.

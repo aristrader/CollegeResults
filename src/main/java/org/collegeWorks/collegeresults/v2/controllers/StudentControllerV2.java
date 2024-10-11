@@ -85,7 +85,5 @@ public class StudentControllerV2 {
     RestResponse response = RestResponse.successResponse(result);
     return ResponseEntity.ok(response);
   }
-
-  // TODO: Club the above 2 controllers into 1 single controller
 }
 

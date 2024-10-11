@@ -1,5 +1,0 @@
-Autowired v/s using private final along with @RequiredArgsConstructor
-
-More on different headers that present, and what is the use case of each.
-
-Read about indexes
