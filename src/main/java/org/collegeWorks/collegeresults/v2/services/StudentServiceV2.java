@@ -52,6 +52,21 @@ public class StudentServiceV2 {
     }
   }
 
+  public StudentDTOV2 getStudentById(Integer studentId) throws ServiceException {
+    try {
+      StudentEntityV2 entity = studentRepository.findById(studentId).orElseThrow(
+          () -> new ServiceException("[StudentServiceV2] Student not found with given studentId",
+              CollegeServiceErrorCodes.STUDENT_DETAILS_NOT_FOUND));
+      return convertEntityToDTO(entity);
+    } catch (ServiceException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new ServiceException(
+          "[StudentServiceV2] Failed to retrieve student with the given id: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   public List<StudentDTOV2> getAllStudents(Integer courseDetailsId) throws ServiceException {
     try {
       List<StudentEntityV2> entities = studentRepository.findByCourseDetailsId(courseDetailsId);

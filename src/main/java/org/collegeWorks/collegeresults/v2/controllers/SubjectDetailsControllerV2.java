@@ -42,6 +42,17 @@ public class SubjectDetailsControllerV2 {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
+  @GetMapping(PathConstantsV2.GET_BY_ID)
+  public ResponseEntity<RestResponse> getSubjectById(@PathVariable("id") Integer subjectId)
+      throws ServiceException {
+    log.info(
+        "[SubjectDetailsControllerV2] Received request to get subject details by subjectId: {}",
+        subjectId);
+    SubjectDetailsDTOV2 result = subjectDetailsService.getSubjectById(subjectId);
+    RestResponse response = RestResponse.successResponse(result);
+    return ResponseEntity.ok(response);
+  }
+
   @GetMapping(PathConstantsV2.GET_SUBJECTS_BY_COURSE)
   public ResponseEntity<RestResponse> getAllSubjectsByCourse(
       @PathVariable("courseDetailsId") int courseDetailsId) throws ServiceException {

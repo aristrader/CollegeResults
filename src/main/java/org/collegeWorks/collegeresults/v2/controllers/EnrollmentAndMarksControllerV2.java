@@ -28,7 +28,7 @@ public class EnrollmentAndMarksControllerV2 {
   private EnrollmentAndMarksServiceV2 enrollmentAndMarksService;
 
   @PostMapping(PathConstantsV2.ADD)
-  public ResponseEntity<RestResponse> addEnrollmentAndMarks(
+  public ResponseEntity<RestResponse> addEnrollment(
       @Valid @RequestBody EnrollmentAndMarksRequestV2 request) throws ServiceException {
     log.info("[EnrollmentAndMarksControllerV2] Received request to add enrollment and marks: {}",
         request);
@@ -37,6 +37,17 @@ public class EnrollmentAndMarksControllerV2 {
         String.format("Enrollment and marks have been successfully inserted with id: %d",
             idCreated));
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  @PostMapping(PathConstantsV2.ADD_MARKS)
+  public ResponseEntity<RestResponse> addMarks(
+      @Valid @RequestBody EnrollmentAndMarksRequestV2 request) throws ServiceException {
+    log.info("[EnrollmentAndMarksControllerV2] Received request to add marks: {}", request);
+
+    enrollmentAndMarksService.updateMarks(request);
+
+    RestResponse response = RestResponse.successResponse("Marks have been successfully updated.");
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping(PathConstantsV2.GET_BY_STUDENT_ID)
@@ -62,5 +73,16 @@ public class EnrollmentAndMarksControllerV2 {
     return ResponseEntity.ok(response);
   }
 
-  //TODO: Add the controller to update the marks of a student
+  @GetMapping(PathConstantsV2.GET_BY_STUDENT_AND_SUBJECT_ID)
+  public ResponseEntity<RestResponse> getByStudentAndSubjectId(
+      @PathVariable("studentId") int studentId,
+      @PathVariable("subjectDetailsId") int subjectDetailsId) throws ServiceException {
+    log.info("[EnrollmentAndMarksControllerV2] Received request to get enrollment and marks by student ID: {} and subject details ID: {}",
+        studentId, subjectDetailsId);
+
+    EnrollmentAndMarksDTOV2 result = enrollmentAndMarksService.getByStudentAndSubjectId(studentId, subjectDetailsId);
+
+    RestResponse response = RestResponse.successResponse(result);
+    return ResponseEntity.ok(response);
+  }
 }
