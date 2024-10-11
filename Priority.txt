@@ -2,18 +2,12 @@ Primary
 
 Application related ->
 -> Read more on good practices while writing application codes, for example, the use of DTO.
--> Club the last two controllers, of course-details and complete the other to-do's in the repo.
 -> have it in the app somewhere so that we can save the details of what all subjects the mark list has been received
 
 DB Related ->
 -> create proper indexes
    NOTE : Ensure that all foreign key constraints are properly indexed to optimize join performance.
           ********Add indexes on foreign key columns if not already automatically indexed **********
-
-Data population and testing scripts ->
--> Start writing the scripts for populating the data and have proper exception handling and logging of cases for which the entry didn't happen properly
--> script for fetching all the data from the after all the entries are made in db match with the original data using script to see everything worked fine. (Second level of surety)
--> when doing the above check if you need a transaction control.
 
 Testing ->
 -> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
@@ -24,37 +18,20 @@ and in parallel, we will also have the data for saving the number of students wh
 Have a look at the TO-DO left in the repo as comments. (Search the word in the whole project)
 
 STEPS -> (All look at the indexes that would be required for working with this)
-1. Create a script to generate student data in the given format.
-2. After we have the list -Group the subjects of each type and display as a list to make sure there are no typing errors.
-  ex -> foundation courses : abc, def, ghi, lmn. (This is more of precautious step to avoid issues in the very beginning)
-3. Make sure the college exists.
-4. Make sure the course_details is populated for that college.
-5. Now first add list of all students (Error cases -> validation failure on request body,
-        duplicate roll no or enrollment no, or unknown exception occurs)
-6. Add each individual subject in the database (Error cases -> validation failure on request body, failure on save (although
-        check if we should implement a function where in the save and retrieve if already save is there), or unknown exceptions)
-7. Now enroll each student in the subjects specified (Error cases -> validation failure on request body, unknown exception)
 
-next script ->
-get all the lists subject wise for each type of subject and each subject option containing all students enrolled in them
+Testing -
+Currently we have tested where the practical marks where there.
+Also test for scenario where practical marks are not there.
 
-next script ->
-create a script to combine all the above data and match with the original list.
+Changes in the validations that we have in our code and database.
+1. We don't know initially which subject will have practical, no constraint can be enforced.
+2. Credits for subjects also we cannot enforce for now (make that validation changes) (also the script will change for uploading the subject details)
+3. When the data already exists then that is not an error in the enrollment script. Remove it. (Scenario -> out of 100 enrollment 1 fail, you can run all 100 and you will get 99 error which is a clutter)
+4. Think of scenarios when you will need to store the data of multiple colleges, how will you manage. will using the db cause issues overtime?
+5. If in future some college needs the details of some students can we give it, how?
+6. We might need to change the marks field from number to string cause we have cases where there is absent instead of marks.
 
-next script ->
-create a script that takes the input of student, subject , etc and populates it with random marks.
-
-next ->
-populate these marks in the database.
-
-next script -> get all the marks from the database and combine it and match with the original excel. This is again a
-  validation step to make sure all entries happened correctly.
-
-Final script ->
-create the end result as required by the college.
-
-Marks kis format me aate hai, number and practical number, kab pata chalta hai ki subject me practical hai ki nahi.
-Kis subject ke kite credits hai ye kab aur kaise pata chalta.
+Maybe we can introduce batch year in the course or some table to identify which year student data it is. have a new course id overall or filter based on the year (By year here we mean 2018, 2019 , etc)
 
 Secondary
 
