@@ -6,7 +6,7 @@ import lombok.Getter;
 
 public class InputConstraints {
 
-  public static final Map<String, String> ALLOWED_SUBJECT_TYPES_MAP = new HashMap<>();
+  private static final Map<String, String> ALLOWED_SUBJECT_TYPES_MAP = new HashMap<>();
   private static final Map<String, AllowedCourses> allowedCoursesMap = new HashMap<>();
   private static final Map<Integer, AllowedSemesters> allowedSemestersMap = new HashMap<>();
 
@@ -43,7 +43,7 @@ public class InputConstraints {
   }
 
   public enum AllowedCourses {
-    BCOM, BSC, BA;
+    BCOM, BSC, BA
   }
 
   @Getter

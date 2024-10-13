@@ -2,6 +2,7 @@ package org.collegeWorks.collegeresults.v2.controllers;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstantsV2;
 import org.collegeWorks.collegeresults.exception.ServiceException;
@@ -9,7 +10,6 @@ import org.collegeWorks.collegeresults.rest.RestResponse;
 import org.collegeWorks.collegeresults.v2.dto.EnrollmentAndMarksDTOV2;
 import org.collegeWorks.collegeresults.v2.model.EnrollmentAndMarksRequestV2;
 import org.collegeWorks.collegeresults.v2.services.EnrollmentAndMarksServiceV2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(PathConstantsV2.ENROLLMENT_AND_MARKS_V2)
 @Slf4j
+@RequiredArgsConstructor
 public class EnrollmentAndMarksControllerV2 {
 
-  @Autowired
-  private EnrollmentAndMarksServiceV2 enrollmentAndMarksService;
+  private final EnrollmentAndMarksServiceV2 enrollmentAndMarksService;
 
   @PostMapping(PathConstantsV2.ADD)
   public ResponseEntity<RestResponse> addEnrollment(
@@ -77,10 +77,12 @@ public class EnrollmentAndMarksControllerV2 {
   public ResponseEntity<RestResponse> getByStudentAndSubjectId(
       @PathVariable("studentId") int studentId,
       @PathVariable("subjectDetailsId") int subjectDetailsId) throws ServiceException {
-    log.info("[EnrollmentAndMarksControllerV2] Received request to get enrollment and marks by student ID: {} and subject details ID: {}",
+    log.info(
+        "[EnrollmentAndMarksControllerV2] Received request to get enrollment and marks by student ID: {} and subject details ID: {}",
         studentId, subjectDetailsId);
 
-    EnrollmentAndMarksDTOV2 result = enrollmentAndMarksService.getByStudentAndSubjectId(studentId, subjectDetailsId);
+    EnrollmentAndMarksDTOV2 result = enrollmentAndMarksService.getByStudentAndSubjectId(studentId,
+        subjectDetailsId);
 
     RestResponse response = RestResponse.successResponse(result);
     return ResponseEntity.ok(response);

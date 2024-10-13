@@ -87,9 +87,9 @@ CREATE TABLE enrollment_and_marks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT NOT NULL,  -- Adjusted data type to match student_id in the student table
     subject_details_id INT NOT NULL,  -- Adjusted data type to match subject_details_id in the subject_details table
-    main_marks INT,
-    cce INT,
-    practical_marks INT,
+    main_marks VARCHAR(10),
+    cce VARCHAR(10),
+    practical_marks VARCHAR(10),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- added new
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- added new
     UNIQUE (student_id, subject_details_id),  -- Unique combo of student_id and subject_details_id

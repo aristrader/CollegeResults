@@ -2,6 +2,7 @@ package org.collegeWorks.collegeresults.v2.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.exception.ServiceException;
 import org.collegeWorks.collegeresults.exception.ServiceException.CollegeServiceErrorCodes;
@@ -11,16 +12,15 @@ import org.collegeWorks.collegeresults.v2.jpa.entity.CourseDetailsEntityV2;
 import org.collegeWorks.collegeresults.v2.jpa.repository.CourseDetailsRepositoryV2;
 import org.collegeWorks.collegeresults.v2.model.CourseDetailsRequestV2;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CourseDetailsServiceV2 {
 
-  @Autowired
-  private CourseDetailsRepositoryV2 courseRepository;
+  private final CourseDetailsRepositoryV2 courseRepository;
 
   public Integer addCourse(CourseDetailsRequestV2 request) throws ServiceException {
 

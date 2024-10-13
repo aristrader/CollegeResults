@@ -5,6 +5,7 @@ import static org.collegeWorks.collegeresults.constant.PathConstantsV2.COURSES_D
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstantsV2;
 import org.collegeWorks.collegeresults.exception.ServiceException;
@@ -12,7 +13,6 @@ import org.collegeWorks.collegeresults.rest.RestResponse;
 import org.collegeWorks.collegeresults.v2.dto.CourseDetailsDTOV2;
 import org.collegeWorks.collegeresults.v2.model.CourseDetailsRequestV2;
 import org.collegeWorks.collegeresults.v2.services.CourseDetailsServiceV2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(COURSES_DETAILS_PATH_V2)
 @Slf4j
+@RequiredArgsConstructor
 public class CourseDetailsControllerV2 {
 
-  @Autowired
-  private CourseDetailsServiceV2 courseService;
+  private final CourseDetailsServiceV2 courseService;
 
   @PostMapping(PathConstantsV2.ADD)
   public ResponseEntity<RestResponse> addCourse(@Valid @RequestBody CourseDetailsRequestV2 request)
@@ -76,6 +76,4 @@ public class CourseDetailsControllerV2 {
     RestResponse response = RestResponse.successResponse(result);
     return ResponseEntity.ok(response);
   }
-
-  // TODO: Add controller to update the TeacherId
 }

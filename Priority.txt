@@ -1,3 +1,14 @@
+Changes in the scripts because of above ->
+1. -> probably no changes in scripts (phone number change from integer to string)
+2. -> changes in the uploading script. (maxCredits maybe null initially)
+3. -> might be changes in the script, test case -> run for few students with AB,
+    also have null values, etc. (mainmarks, cce and practical now are strings)
+    [When calculating total marks if not numeric then if main marks not null then main marks else cce.]
+
+Changes in the script in general ->
+1. When the data already exists then that is not an error in the enrollment script.
+    Remove it. (Scenario -> out of 100 enrollment 1 fail, you can run all 100 and you will get 99 error which is a clutter)
+
 Primary
 
 Application related ->
@@ -13,21 +24,13 @@ Testing ->
 -> Automation test cases for making sure everything is working correctly, this needs to be done to make sure that nothing breaks after the changes are done.
 -> Think of all possible test cases and write a test for each kind of test case. Maybe we can use some unit testing here.
 
-Have a look at the TO-DO left in the repo as comments. (Search the word in the whole project)
-
-STEPS -> (All look at the indexes that would be required for working with this)
-
 Testing -
 Currently we have tested where the practical marks where there.
 Also test for scenario where practical marks are not there.
 
 Changes in the validations that we have in our code and database.
-1. We don't know initially which subject will have practical, no constraint can be enforced.
-2. Credits for subjects also we cannot enforce for now (make that validation changes) (also the script will change for uploading the subject details)
-3. When the data already exists then that is not an error in the enrollment script. Remove it. (Scenario -> out of 100 enrollment 1 fail, you can run all 100 and you will get 99 error which is a clutter)
-4. Think of scenarios when you will need to store the data of multiple colleges, how will you manage. will using the db cause issues overtime?
-5. If in future some college needs the details of some students can we give it, how?
-6. We might need to change the marks field from number to string cause we have cases where there is absent instead of marks.
+1. Think of scenarios when you will need to store the data of multiple colleges, how will you manage. will using the db cause issues overtime?
+2. If in future some college needs the details of some students that were passed in previous years can we give it, how?
 
 Maybe we can introduce batch year in the course or some table to identify which year student data it is. have a new course id overall or filter based on the year (By year here we mean 2018, 2019 , etc)
 
@@ -35,17 +38,11 @@ Secondary
 
 First ->
 1. Something to restrict option names
-2. There may be subject that has only practical, will need to change the constraints in that case.
-3. Having the constraint of only fixed subject_options for a college and subject_type
-4. Do something about the constraints of practical marks; like the subject has practical only then the entry of practical number should be made in the db.
-5. The logic to check the student and subject belong to the same college may be optimized.
+2. Having the constraint of only fixed subject_options for a college and subject_type
 
 1. Saving the data -> Have the database in some cloud application probably we can use aiven.io, also have database backup
-2. Adding new semesters should not be allowed, accept the admin-user. (think on this before implementing)
-3. Can add email or some other alert when a semester is created or something to notify when something happens that was not expected in a flow.
-4. Add better logging. Also for logging if datadog or something is available to trace each call.
-5. The v1 controller things separate it into a separate repo all together
-6. Learn more about git, commit cleaning, main branch, etc.
+2. Add better logging. Also for logging if datadog or something is available to trace each call.
+3. The v1 controller things separate it into a separate repo all together
 
 After the above is completed, higher versions ->
 search for open source options like moodle, understand them, look at if you can offer these via them to get each college their own system to work on.
@@ -56,8 +53,6 @@ Class representative are not being added for now due to circular foreign ket ref
 Add the bidirectional mapping with proper relationships like one to one and join columns with proper fields like insertable, etc. Also, the fetch type should be lazy.
 Support batch updates in the application
 Versioning or locking (optimistic or pessimistic is not required for now as this is a single user system) i.e., Concurrency control using optimistic or pessimistic locking, not required any when it is a single user handled system like right now.
-@Formula -> this can be added later in the mark table to keep all the calculated values in it only.
-@Check: Adds a check constraint to a database column or table. This can enforce rules at the database level. @Check(constraints = "marks >= 0 AND marks <= 100")
 Have the sql query printing true and start analyzing all your queries.
 Cascading
 N+1 problem -> not necessarily existing in your system, but do read about it, some ways to resolve, using dto, using entityGraph, using @fetch

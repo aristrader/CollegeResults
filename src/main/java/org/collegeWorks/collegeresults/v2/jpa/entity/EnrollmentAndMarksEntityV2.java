@@ -1,8 +1,13 @@
 package org.collegeWorks.collegeresults.v2.jpa.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,17 +31,17 @@ public class EnrollmentAndMarksEntityV2 {
   @Column(name = "subject_details_id", nullable = false)
   private Integer subjectDetailsId;
 
-  @PositiveOrZero
   @Column(name = "main_marks")
-  private Integer mainMarks;
+  @Size(max = 10)
+  private String mainMarks;
 
-  @PositiveOrZero
   @Column(name = "cce")
-  private Integer cce;
+  @Size(max = 10)
+  private String cce;
 
-  @PositiveOrZero
   @Column(name = "practical_marks")
-  private Integer practicalMarks;
+  @Size(max = 10)
+  private String practicalMarks;
 
   @CreationTimestamp
   @Column(name = "created_at", updatable = false)
