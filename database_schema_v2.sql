@@ -10,7 +10,7 @@ CREATE TABLE college (
     email VARCHAR(100),
     website VARCHAR(100),
     address VARCHAR(255) NOT NULL,
-    phone_number INT,
+    phone_number VARCHAR(15),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE (college_name, address)  -- Unique constraint on college_name and address
@@ -72,7 +72,7 @@ CREATE TABLE subject_details (
     course_details_id INT NOT NULL,
     subject_type VARCHAR(50) NOT NULL,
     options_name VARCHAR(100) NOT NULL,
-    max_credits_subject INT NOT NULL,
+    max_credits_subject INT,
     max_credits_practical INT,
     subject_teacher_id INT,  -- Adjusted data type to match teacher_id
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- added new

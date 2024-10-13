@@ -2,6 +2,7 @@ package org.collegeWorks.collegeresults.v2.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -26,8 +27,6 @@ public class CollegeRequestV2 {
   @Size(max = 255, message = "address cannot be more than 255 characters")
   private String address;
 
-  // TODO: Add the appropriate annotation when you change this from integer to string
-  private Integer phoneNumber;
-//  @Pattern(regexp = "\\d{10}", message = "Phone number must be exactly 10 digits")
-//  private String phoneNumber;
+  @Pattern(regexp = "\\d{10}", message = "Phone number must be exactly 10 digits")
+  private String phoneNumber;
 }

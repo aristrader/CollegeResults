@@ -36,8 +36,7 @@ public class SubjectDetailsEntityV2 {
   @Column(name = "options_name", nullable = false)
   private String optionsName;
 
-  @NotNull
-  @Positive
+  @PositiveOrZero
   @Column(name = "max_credits_subject", nullable = false)
   private Integer maxCreditsSubject;
 

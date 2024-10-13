@@ -7,6 +7,7 @@ import static org.collegeWorks.collegeresults.constant.PathConstantsV2.SUBJECT_D
 
 import jakarta.validation.Valid;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.collegeWorks.collegeresults.constant.PathConstantsV2;
 import org.collegeWorks.collegeresults.exception.ServiceException;
@@ -14,7 +15,6 @@ import org.collegeWorks.collegeresults.rest.RestResponse;
 import org.collegeWorks.collegeresults.v2.dto.SubjectDetailsDTOV2;
 import org.collegeWorks.collegeresults.v2.model.SubjectDetailsRequestV2;
 import org.collegeWorks.collegeresults.v2.services.SubjectDetailsServiceV2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(SUBJECT_DETAILS_PATH_V2)
 @Slf4j
+@RequiredArgsConstructor
 public class SubjectDetailsControllerV2 {
 
-  @Autowired
-  private SubjectDetailsServiceV2 subjectDetailsService;
+  private final SubjectDetailsServiceV2 subjectDetailsService;
 
   @PostMapping(PathConstantsV2.ADD)
   public ResponseEntity<RestResponse> addSubjectDetails(
@@ -40,6 +40,30 @@ public class SubjectDetailsControllerV2 {
     RestResponse response = RestResponse.successResponse(
         String.format("Subject details added with ID: %d", subjectId));
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  @PostMapping(PathConstantsV2.UPDATE)
+  public ResponseEntity<RestResponse> updateSubjectDetailsByCourseTypeOptions(
+      @Valid @RequestBody SubjectDetailsRequestV2 request) throws ServiceException {
+
+    log.info("[SubjectDetailsControllerV2] Request to update subject details for request : {}",
+        request);
+
+    subjectDetailsService.updateSubjectDetails(request);
+    RestResponse response = RestResponse.successResponse("Subject details updated successfully");
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping(PathConstantsV2.UPDATE_BY_ID)
+  public ResponseEntity<RestResponse> updateSubjectDetails(
+      @PathVariable("id") Integer subjectDetailsId,
+      @Valid @RequestBody SubjectDetailsRequestV2 request) throws ServiceException {
+
+    log.info("[SubjectDetailsControllerV2] Request to update subject details with ID: {}",
+        subjectDetailsId);
+    subjectDetailsService.updateSubjectDetailsByID(subjectDetailsId, request);
+    RestResponse response = RestResponse.successResponse("Subject details updated successfully");
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping(PathConstantsV2.GET_BY_ID)
@@ -76,7 +100,6 @@ public class SubjectDetailsControllerV2 {
     return ResponseEntity.ok(response);
   }
 
-  // TODO: Change the implementation later because there is unique constraint so there will always be only 1 entry that is returned so no need for list
   @GetMapping(GET_SUBJECTS_BY_COURSE_TYPE_AND_OPTIONS)
   public ResponseEntity<RestResponse> getSubjectsByCourseTypeAndOptions(
       @PathVariable("courseDetailsId") int courseDetailsId,
@@ -85,9 +108,9 @@ public class SubjectDetailsControllerV2 {
     log.info(
         "[SubjectDetailsControllerV2] Fetching subjects by course ID, type, and options: {}, {}, {}",
         courseDetailsId, subjectType, optionsName);
-    List<SubjectDetailsDTOV2> subjects = subjectDetailsService.getAllSubjectsByCourseTypeAndOptions(
+    SubjectDetailsDTOV2 subject = subjectDetailsService.getAllSubjectsByCourseTypeAndOptions(
         courseDetailsId, subjectType, optionsName);
-    RestResponse response = RestResponse.successResponse(subjects);
+    RestResponse response = RestResponse.successResponse(subject);
     return ResponseEntity.ok(response);
   }
 

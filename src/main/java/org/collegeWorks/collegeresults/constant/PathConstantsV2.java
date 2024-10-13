@@ -17,6 +17,8 @@ public class PathConstantsV2 {
   public static final String ENROLLMENT_AND_MARKS_V2 = V2 + ENROLLMENT_AND_MARKS;
   public static final String ADD = "/add";
   public static final String ADD_MARKS = "/addMarks";
+  public static final String UPDATE = "/update";
+  public static final String UPDATE_BY_ID = "/update/{id}";
   public static final String GET = "/get";
   public static final String GET_BY_ID = "/get/id/{id}";
   public static final String GET_BY_NAME = "/get/name/{name}";

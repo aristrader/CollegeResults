@@ -11,5 +11,5 @@ public class CollegeDTOV2 {
   private String email;
   private String website;
   private String address;
-  private Integer phoneNumber;
+  private String phoneNumber;
 }

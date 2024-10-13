@@ -60,6 +60,51 @@ public class SubjectDetailsServiceV2 {
     }
   }
 
+  public void updateSubjectDetails(SubjectDetailsRequestV2 request) throws ServiceException {
+    try {
+      // Find the subject by courseDetailsId, subjectType, and optionsName
+      SubjectDetailsEntityV2 existingSubjectDetails = subjectDetailsRepository.findByCourseDetailsIdAndSubjectTypeAndOptionsName(
+              request.getCourseDetailsId(), request.getSubjectType(), request.getOptionsName())
+          .orElseThrow(() -> new ServiceException(
+              "[SubjectDetailsServiceV2] Subject details not found for the given course, subject type, and options",
+              CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND));
+
+      // Update the existing entity with the new values
+      existingSubjectDetails.setMaxCreditsSubject(request.getMaxCreditsSubject());
+      existingSubjectDetails.setMaxCreditsPractical(request.getMaxCreditsPractical());
+      existingSubjectDetails.setSubjectTeacherId(request.getSubjectTeacherId());
+
+      subjectDetailsRepository.save(existingSubjectDetails);
+    } catch (Exception e) {
+      throw new ServiceException(
+          "[SubjectDetailsServiceV2] Failed to update subject details: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public void updateSubjectDetailsByID(Integer subjectDetailsId, SubjectDetailsRequestV2 request)
+      throws ServiceException {
+    try {
+      SubjectDetailsEntityV2 existingSubjectDetails = subjectDetailsRepository.findById(
+          subjectDetailsId).orElseThrow(() -> new ServiceException(
+          "[SubjectDetailsServiceV2] Subject details not found for ID: " + subjectDetailsId,
+          CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND));
+
+      // Update the existing entity with the new values
+      existingSubjectDetails.setMaxCreditsSubject(request.getMaxCreditsSubject());
+      existingSubjectDetails.setMaxCreditsPractical(request.getMaxCreditsPractical());
+      existingSubjectDetails.setSubjectTeacherId(request.getSubjectTeacherId());
+
+      subjectDetailsRepository.save(existingSubjectDetails);
+    } catch (ServiceException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new ServiceException(
+          "[SubjectDetailsServiceV2] Failed to update subject details: " + e.getMessage(),
+          CollegeServiceErrorCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   public SubjectDetailsDTOV2 getSubjectById(Integer subjectId) throws ServiceException {
     try {
       SubjectDetailsEntityV2 entity = subjectDetailsRepository.findById(subjectId).orElseThrow(
@@ -116,18 +161,14 @@ public class SubjectDetailsServiceV2 {
     }
   }
 
-  public List<SubjectDetailsDTOV2> getAllSubjectsByCourseTypeAndOptions(int courseDetailsId,
+  public SubjectDetailsDTOV2 getAllSubjectsByCourseTypeAndOptions(int courseDetailsId,
       String subjectType, String optionsName) throws ServiceException {
     try {
-      List<SubjectDetailsEntityV2> entities = subjectDetailsRepository.findByCourseDetailsIdAndSubjectTypeAndOptionsName(
-          courseDetailsId, subjectType, optionsName);
-      if (entities.isEmpty()) {
-        throw new ServiceException(
-            "[SubjectDetailsServiceV2] No subjects found for course ID: " + courseDetailsId
-                + ", type: " + subjectType + ", and options: " + optionsName,
-            CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND);
-      }
-      return entities.stream().map(this::convertEntityToDTO).collect(Collectors.toList());
+      SubjectDetailsEntityV2 existingSubjectDetails = subjectDetailsRepository.findByCourseDetailsIdAndSubjectTypeAndOptionsName(
+          courseDetailsId, subjectType, optionsName).orElseThrow(() -> new ServiceException(
+          "[SubjectDetailsServiceV2] Subject details not found for the given course, subject type, and options",
+          CollegeServiceErrorCodes.SUBJECT_DETAILS_NOT_FOUND));
+      return convertEntityToDTO(existingSubjectDetails);
     } catch (ServiceException e) {
       throw e;
     } catch (Exception e) {

@@ -18,7 +18,6 @@ public class SubjectDetailsRequestV2 {
   @Size(max = 100, message = "Options name cannot be more than 100 characters")
   private String optionsName;
 
-  @NotNull(message = "Maximum subject credits cannot be null")
   private Integer maxCreditsSubject;
 
   private Integer maxCreditsPractical;

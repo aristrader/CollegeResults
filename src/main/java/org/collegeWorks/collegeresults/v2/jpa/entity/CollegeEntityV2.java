@@ -48,9 +48,8 @@ public class CollegeEntityV2 {
   @Column(name = "address", nullable = false)
   private String address;
 
-  // TODO: Later change this field from integer to string just like we have in the teacher entity and similar validation
   @Column(name = "phone_number")
-  private Integer phoneNumber;
+  private String phoneNumber;
 
   @CreationTimestamp
   @Column(name = "created_at", updatable = false)
